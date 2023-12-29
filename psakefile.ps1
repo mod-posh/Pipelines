@@ -1,17 +1,18 @@
-$script:ModuleName = 'Pipelines';                                                        # The name of your PowerShell module
-$script:ProjectName = "Pipelines";                                                       # The name of your C# Project
-$script:DotnetVersion = "net7.0";                                                        # The version of .Net the project is targeted to
-$script:GithubOrg = 'mod-posh'                                                           # This could be your github username if you're not working in a Github Org
-$script:Repository = "https://github.com/$($script:GithubOrg)";                          # This is the Github Repo
-$script:DeployBranch = 'main';                                                           # The branch that we deploy from, typically master or main
-$script:Source = Join-Path $PSScriptRoot $script:ModuleName;                             # This will be the root of your Module Project, not the Repository Root
-$script:Output = Join-Path $PSScriptRoot 'output';                                       # The module will be output into this folder
-$script:Docs = Join-Path $PSScriptRoot 'docs';                                           # The root folder for the PowerShell Module
-$script:Destination = Join-Path $Output $script:ModuleName;                              # The PowerShell module folder that contains the manifest and other files
-$script:ModulePath = "$Destination\$script:ModuleName.dll";                              # The main PowerShell Module file
-$script:ManifestPath = "$Destination\$script:ModuleName.psd1";                           # The main PowerShell Module Manifest
-$script:TestFile = ("TestResults_$(Get-Date -Format s).xml").Replace(':', '-');          # The Pester Test output file
-$script:PoshGallery = "https://www.powershellgallery.com/packages/$($script:ModuleName)" # The PowerShell Gallery URL
+$script:ModuleName = 'Pipelines';                                                               # The name of your PowerShell module
+$script:ProjectName = "Pipelines";                                                              # The name of your C# Project
+$script:DotnetVersion = "net7.0";                                                               # The version of .Net the project is targeted to
+$script:GithubOrg = 'mod-posh'                                                                  # This could be your github username if you're not working in a Github Org
+$script:Repository = "https://github.com/$($script:GithubOrg)";                                 # This is the Github Repo
+$script:DeployBranch = 'main';                                                                  # The branch that we deploy from, typically master or main
+$script:Source = Join-Path $PSScriptRoot $script:ModuleName;                                    # This will be the root of your Module Project, not the Repository Root
+$script:Output = Join-Path $PSScriptRoot 'output';                                              # The module will be output into this folder
+$script:Docs = Join-Path $PSScriptRoot 'docs';                                                  # The root folder for the PowerShell Module
+$script:Destination = Join-Path $Output $script:ModuleName;                                     # The PowerShell module folder that contains the manifest and other files
+$script:ModulePath = "$Destination\$script:ModuleName.dll";                                     # The main PowerShell Module file
+$script:ManifestPath = "$Destination\$script:ModuleName.psd1";                                  # The main PowerShell Module Manifest
+$script:TestFile = ("TestResults_$(Get-Date -Format s).xml").Replace(':', '-');                 # The Pester Test output file
+$script:DiscordChannel = "https://discord.com/channels/1044305359021555793/1044305781627035811" # Discord Channel
+$script:PoshGallery = "https://www.powershellgallery.com/packages/$($script:ModuleName)"        # The PowerShell Gallery URL
 
 $BuildHelpers = Get-Module -ListAvailable | Where-Object -Property Name -eq BuildHelpers;
 if ($BuildHelpers)
@@ -58,20 +59,21 @@ else
  throw "Please Install-Module -Name Pester";
 }
 
-Write-Host -ForegroundColor Green "ModuleName    : $($script:ModuleName)";
-Write-Host -ForegroundColor Green "ProjectName   : $($script:ProjectName)";
-Write-Host -ForegroundColor Green "DotnetVersion : $($script:DotnetVersion)";
-Write-Host -ForegroundColor Green "Githuborg     : $($script:Source)";
-Write-Host -ForegroundColor Green "Source        : $($script:Source)";
-Write-Host -ForegroundColor Green "Output        : $($script:Output)";
-Write-Host -ForegroundColor Green "Docs          : $($script:Docs)";
-Write-Host -ForegroundColor Green "Destination   : $($script:Destination)";
-Write-Host -ForegroundColor Green "ModulePath    : $($script:ModulePath)";
-Write-Host -ForegroundColor Green "ManifestPath  : $($script:ManifestPath)";
-Write-Host -ForegroundColor Green "TestFile      : $($script:TestFile)";
-Write-Host -ForegroundColor Green "Repository    : $($script:Repository)";
-Write-Host -ForegroundColor Green "PoshGallery   : $($script:PoshGallery)";
-Write-Host -ForegroundColor Green "DeployBranch  : $($script:DeployBranch)";
+Write-Host -ForegroundColor Green "ModuleName     : $($script:ModuleName)";
+Write-Host -ForegroundColor Green "ProjectName    : $($script:ProjectName)";
+Write-Host -ForegroundColor Green "DotnetVersion  : $($script:DotnetVersion)";
+Write-Host -ForegroundColor Green "Githuborg      : $($script:Source)";
+Write-Host -ForegroundColor Green "Source         : $($script:Source)";
+Write-Host -ForegroundColor Green "Output         : $($script:Output)";
+Write-Host -ForegroundColor Green "Docs           : $($script:Docs)";
+Write-Host -ForegroundColor Green "Destination    : $($script:Destination)";
+Write-Host -ForegroundColor Green "ModulePath     : $($script:ModulePath)";
+Write-Host -ForegroundColor Green "ManifestPath   : $($script:ManifestPath)";
+Write-Host -ForegroundColor Green "TestFile       : $($script:TestFile)";
+Write-Host -ForegroundColor Green "Repository     : $($script:Repository)";
+Write-Host -ForegroundColor Green "DiscordChannel : $($script:DiscordChannel)";
+Write-Host -ForegroundColor Green "PoshGallery    : $($script:PoshGallery)";
+Write-Host -ForegroundColor Green "DeployBranch   : $($script:DeployBranch)";
 
 Task default -depends LocalUse
 
@@ -95,7 +97,7 @@ Task UpdateReadme -Description "Update the README file" -Action {
  $GalleryBadge = "[![Powershell Gallery](https://img.shields.io/powershellgallery/dt/$($script:ModuleName))](https://www.powershellgallery.com/packages/$($script:ModuleName))"
  $IssueBadge = "[![GitHub issues](https://img.shields.io/github/issues/$($script:GithubOrg)/$($script:ModuleName))]($($script:Repository)/$($script:ModuleName)/issues)"
  $LicenseBadge = "[![GitHub license](https://img.shields.io/github/license/$($script:GithubOrg)/$($script:ModuleName))]($($script:Repository)/$($script:ModuleName)/blob/master/LICENSE)"
- $DiscordBadge = "[![Discord Server](https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0b5493894cf60b300587_full_logo_white_RGB.svg)]($($DiscordChannel))"
+ $DiscordBadge = "[![Discord Server](https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0b5493894cf60b300587_full_logo_white_RGB.svg)]($($script:DiscordChannel))"
 
  if (!(Get-Module -Name $script:ModuleName )) { Import-Module -Name $script:Destination }
 
