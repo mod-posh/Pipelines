@@ -128,6 +128,27 @@ Task Post2Discord -Description "Post a message to discord" -Action {
  Invoke-RestMethod -Uri $Discord.uri -Body ($Discord.message | ConvertTo-Json -Compress) -Method Post -ContentType 'application/json; charset=UTF-8'
 }
 
+Task Post2Bluesky -Description "Post a message to bsky.app" -Action {
+ $version = (Get-Module -Name $($script:ModuleName) | Select-Object -Property Version).Version.ToString()
+ $createdAt = Get-Date -Format "yyyy-MM-ddTHH:mm:ss.ffffffZ"
+ # Authenticate
+ $AuthBody = Get-Content -Path "$($PSScriptRoot)\bluesky.json"
+ $Handle = $AuthBody |ConvertFrom-Json |Select-Object -ExpandProperty Identifier
+ $Headers = @{}
+ $Headers.Add('Content-Type','application/json')
+ $Response = Invoke-RestMethod -Uri "https://bsky.social/xrpc/com.atproto.server.createSession" -Method Post -Body $AuthBody -Headers $Headers
+ # Create post
+ $Headers.Add('Authorization',"Bearer $($Response.accessJwt)")
+ $Headers.Add('repo', $Handle)
+ $Headers.Add('collection', 'app.bsky.feed.post')
+ $Record = New-Object -TypeName psobject -Property @{
+  '$type'="app.bsky.feed.post"
+  'text'="Version $($version) of $($script:ModuleName) released. Please visit Github ($($script:Repository)/$($script:ModuleName)) or PowershellGallery ($($script:PoshGallery)) to download."
+  "createdAt"=$createdAt
+ }
+ Invoke-RestMethod -Uri "https://bsky.social/xrpc/com.atproto.repo.createRecord" -Method Post -Body ($Record |ConvertTo-Json -Compress) -Headers $Headers
+}
+
 Task CleanProject -Description "Clean the project before building" -Action {
  dotnet clean "$($PSScriptRoot)\$($script:ProjectName)\$($script:ProjectName).csproj"
 }
