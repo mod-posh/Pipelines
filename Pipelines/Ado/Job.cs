@@ -1,11 +1,26 @@
 ﻿using ModPosh.Pipelines.Serializers;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ModPosh.Pipelines.Ado
 {
     public class Job
     {
-        public string Name { get; set; } = string.Empty;
+        private static readonly Regex NameRegex = new Regex(@"^[A-Za-z0-9_]+$", RegexOptions.Compiled);
+        private string _name = string.Empty;
+
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (!NameRegex.IsMatch(value))
+                {
+                    throw new ArgumentException("Name can only contain A-Z, a-z, 0-9, and underscore.");
+                }
+                _name = value;
+            }
+        }
         public Pool Pool { get; set; } = new Pool();
         public Dictionary<string,string> Variables { get; set; } = new Dictionary<string, string>();
         public List<Template> Steps { get; set; } = new List<Template>();
