@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using ModPosh.Pipelines.Serializers;
+using System.Text;
 
 namespace ModPosh.Pipelines.Ado
 {
@@ -33,42 +34,15 @@ namespace ModPosh.Pipelines.Ado
         }
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"- job: {Name}");
-            sb.AppendLine($"  pool: ");
-
-            string[] lines = Pool.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-            for (int i = 0; i < lines.Length; i++)
+            ISerializer serializer = new YamlSerializer();
+            try
             {
-                lines[i] = lines[i].PadLeft(lines[i].Length + 4);
+                return serializer.Serialize(this);
             }
-            sb.AppendLine($"{new StringBuilder(string.Join(Environment.NewLine, lines))}");
-
-            if (Variables.Count > 0)
+            catch (Exception ex)
             {
-                sb.AppendLine($"  variables:");
-                foreach (var variable in Variables)
-                {
-                    if (variable.Value.StartsWith("$"))
-                        sb.AppendLine($"    {variable.Key}: {variable.Value}");
-                    else
-                        sb.AppendLine($"    {variable.Key}: \"{variable.Value}\"");
-                }
+                return $"Error during serialization: {ex.Message}";
             }
-            if (Steps.Count > 0)
-            {
-                sb.AppendLine($"  steps:");
-                foreach (Template template in Steps)
-                {
-                    lines = template.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-                    for (int i = 0; i < lines.Length; i++)
-                    {
-                        lines[i] = lines[i].PadLeft(lines[i].Length + 2);
-                    }
-                    sb.AppendLine($"{new StringBuilder(string.Join(Environment.NewLine, lines))}");
-                }
-            }
-            return sb.ToString();
         }
     }
 }
