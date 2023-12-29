@@ -14,7 +14,7 @@ namespace ModPosh.Pipelines.Cmdlets
     {
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "Default")]
         public string Name { get; set; } = string.Empty;
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = "Default")]
+        [Parameter(Mandatory = false, Position = 1, ParameterSetName = "Default")]
         public Stage[] Stages { get; set; } = Array.Empty<Stage>();
         protected override void BeginProcessing()
         {
