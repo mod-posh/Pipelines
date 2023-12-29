@@ -2,8 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
+    <RootNamespace>ModPosh</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>1.0.0.0</Version>
+    <Authors>Jeffrey S. Patton</Authors>
+    <Company>Patton-Tech.com</Company>
+    <Description>A PowerShell module for working with ADO/Github pipelines</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/mod-posh/pipelines</RepositoryUrl>
   </PropertyGroup>
 
 </Project>
