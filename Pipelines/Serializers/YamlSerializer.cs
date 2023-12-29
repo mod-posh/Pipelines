@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using ModPosh.Pipelines.Ado;
 
 namespace ModPosh.Pipelines.Serializers
@@ -37,7 +38,42 @@ namespace ModPosh.Pipelines.Serializers
 
         private string SerializeTemplate(Stage stage)
         {
-            // Serialization logic here
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"- stage: {stage.Name}");
+            if (string.IsNullOrEmpty(stage.DisplayName) == false)
+                sb.AppendLine($"  displayName: {stage.DisplayName}");
+            if (stage.DependsOn.Length > 0)
+            {
+                sb.AppendLine($"  dependsOn:");
+                foreach (string Dependency in stage.DependsOn)
+                {
+                    sb.AppendLine($"  - {Dependency}");
+                }
+            }
+            if (string.IsNullOrEmpty(stage.Condition) == false)
+                sb.AppendLine($"  condition: {stage.Condition}");
+            if (stage.Variables.Count > 0)
+            {
+                sb.AppendLine($"  variables:");
+                foreach (var variable in stage.Variables)
+                {
+                    if (variable.Value.StartsWith("$"))
+                        sb.AppendLine($"    {variable.Key}: {variable.Value}");
+                    else
+                        sb.AppendLine($"    {variable.Key}: '{variable.Value}'");
+                }
+            }
+            sb.AppendLine($"  jobs:");
+            foreach (Job job in stage.Jobs)
+            {
+                string[] lines = job.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    lines[i] = lines[i].PadLeft(lines[i].Length + 2);
+                }
+                sb.AppendLine($"{new StringBuilder(string.Join(Environment.NewLine, lines))}");
+            }
+            return sb.ToString();
         }
         private string SerializeTemplate(Job job)
         {
