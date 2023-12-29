@@ -7,7 +7,7 @@ using ModPosh.Pipelines.Ado;
 
 namespace ModPosh.Pipelines.Cmdlets
 {
-    [Cmdlet(VerbsCommon.New, "Pool", HelpUri = "https://github.com/mod-posh/Pipelines/blob/v1.4.0.0/docs/New-Pool.md#new-pool")]
+    [Cmdlet(VerbsCommon.New, "Pool", HelpUri = "https://github.com/mod-posh/Pipelines/blob/v1.5.0.0/docs/New-Pool.md#new-pool")]
     [OutputType(typeof(Pool))]
     [CmdletBinding(PositionalBinding = true)]
     public class NewPool : PSCmdlet

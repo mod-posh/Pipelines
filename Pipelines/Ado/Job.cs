@@ -8,7 +8,6 @@ namespace ModPosh.Pipelines.Ado
     {
         private static readonly Regex NameRegex = new Regex(@"^[A-Za-z0-9_]+$", RegexOptions.Compiled);
         private string _name = string.Empty;
-
         public string Name
         {
             get => _name;
