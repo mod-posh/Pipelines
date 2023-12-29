@@ -12,7 +12,7 @@
  RootModule = 'Pipelines.dll'
 
  # Version number of this module.
- ModuleVersion = '1.4.0.0'
+ ModuleVersion = '1.5.0.0'
 
  # Supported PSEditions
  # CompatiblePSEditions = @()
@@ -123,7 +123,7 @@
  } # End of PrivateData hashtable
 
  # HelpInfo URI of this module
- HelpInfoURI = 'https://raw.githubusercontent.com/mod-posh/Pipelines/v1.4.0.0/cabs/'
+ HelpInfoURI = 'https://raw.githubusercontent.com/mod-posh/Pipelines/v1.5.0.0/cabs/'
 
  # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
 

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using ModPosh.Pipelines.Ado;
 using System.Collections;
 using System.Management.Automation;
-using ModPosh.Pipelines.Ado;
 
 namespace ModPosh.Pipelines.Cmdlets
 {
-    [Cmdlet(VerbsCommon.New, "Stage", HelpUri = "https://github.com/mod-posh/Pipelines/blob/v1.4.0.0/docs/New-Stage.md#new-stage")]
+    [Cmdlet(VerbsCommon.New, "Stage", HelpUri = "https://github.com/mod-posh/Pipelines/blob/v1.5.0.0/docs/New-Stage.md#new-stage")]
     [OutputType(typeof(Stage))]
     [CmdletBinding(PositionalBinding = true)]
     public class NewStage : PSCmdlet

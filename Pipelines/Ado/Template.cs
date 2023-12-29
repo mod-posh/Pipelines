@@ -1,18 +1,17 @@
 ﻿using ModPosh.Pipelines.Serializers;
-using System.Text;
 
 namespace ModPosh.Pipelines.Ado
 {
     public class Template
     {
         public string Name { get; set; } = string.Empty;
-        public Dictionary<string,string> Parameters { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> Parameters { get; set; } = new Dictionary<string, string>();
         public Template() { }
         public Template(string name)
         {
             Name = name;
         }
-        public Template(string name, Dictionary<string,string> parameters)
+        public Template(string name, Dictionary<string, string> parameters)
         {
             Name = name;
             Parameters = parameters;
