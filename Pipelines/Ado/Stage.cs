@@ -9,7 +9,7 @@ namespace ModPosh.Pipelines.Ado
         public string[] DependsOn { get;set; } = Array.Empty<string>();
         public string Condition { get; set; } = string.Empty;
         public Dictionary<string,string> Variables { get; set; } = new Dictionary<string, string>();
-        public string Jobs { get; set; } = string.Empty;
+        public List<Job> Jobs { get; set; } = new List<Job>();
         public Stage() { }
         public Stage(string name)
         {
@@ -41,7 +41,7 @@ namespace ModPosh.Pipelines.Ado
             Condition = condition;
             Variables = variables;
         }
-        public Stage(string name, string displayName, string[] dependsOn, string condition, Dictionary<string,string> variables, string jobs)
+        public Stage(string name, string displayName, string[] dependsOn, string condition, Dictionary<string,string> variables, List<Job> jobs)
         {
             Name = name;
             DisplayName = displayName;
@@ -78,6 +78,15 @@ namespace ModPosh.Pipelines.Ado
                 }
             }
             sb.AppendLine($"  jobs:");
+            foreach (Job job in Jobs)
+            {
+                string[] lines = job.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    lines[i] = lines[i].PadLeft(lines[i].Length + 2);
+                }
+                sb.AppendLine($"{new StringBuilder(string.Join(Environment.NewLine, lines))}");
+            }
             return sb.ToString();
         }
     }
