@@ -92,4 +92,4 @@ Here are some links that may be useful
 
 # KEYWORDS
 
-- {{ create pipeline }}
+- create pipeline
