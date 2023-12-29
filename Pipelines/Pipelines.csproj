@@ -21,4 +21,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Management.Automation" Version="7.3.10" />
+  </ItemGroup>
+
 </Project>
