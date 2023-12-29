@@ -139,14 +139,18 @@ Task Post2Bluesky -Description "Post a message to bsky.app" -Action {
  $Response = Invoke-RestMethod -Uri "https://bsky.social/xrpc/com.atproto.server.createSession" -Method Post -Body $AuthBody -Headers $Headers
  # Create post
  $Headers.Add('Authorization',"Bearer $($Response.accessJwt)")
- $Headers.Add('repo', $Handle)
- $Headers.Add('collection', 'app.bsky.feed.post')
  $Record = New-Object -TypeName psobject -Property @{
   '$type'="app.bsky.feed.post"
   'text'="Version $($version) of $($script:ModuleName) released. Please visit Github ($($script:Repository)/$($script:ModuleName)) or PowershellGallery ($($script:PoshGallery)) to download."
   "createdAt"=$createdAt
  }
- Invoke-RestMethod -Uri "https://bsky.social/xrpc/com.atproto.repo.createRecord" -Method Post -Body ($Record |ConvertTo-Json -Compress) -Headers $Headers
+ $Post = New-Object -TypeName psobject -Property @{
+  'repo'=$Handle
+  'collection'='app.bsky.feed.post'
+  record=$Record
+ }
+
+ Invoke-RestMethod -Uri "https://bsky.social/xrpc/com.atproto.repo.createRecord" -Method Post -Body ($Post |ConvertTo-Json -Compress) -Headers $Headers
 }
 
 Task CleanProject -Description "Clean the project before building" -Action {
