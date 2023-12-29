@@ -7,7 +7,7 @@ namespace ModPosh.Pipelines.Ado
         public string Name { get; set; } = string.Empty;
         public string Pool { get; set; } = string.Empty;
         public Dictionary<string,string> Variables { get; set; } = new Dictionary<string, string>();
-        public string[] Steps { get; set; } = Array.Empty<string>();
+        public List<Template> Steps { get; set; } = new List<Template>();
         public Job() { }
         public Job(string name)
         {
@@ -24,7 +24,7 @@ namespace ModPosh.Pipelines.Ado
             Pool = pool;
             Variables = variables;
         }
-        public Job(string name, string pool, Dictionary<string,string> variables, string[] steps)
+        public Job(string name, string pool, Dictionary<string,string> variables, List<Template> steps)
         {
             Name = name;
             Pool = pool;
@@ -53,6 +53,19 @@ namespace ModPosh.Pipelines.Ado
                         sb.AppendLine($"    {variable.Key}: {variable.Value}");
                     else
                         sb.AppendLine($"    {variable.Key}: \"{variable.Value}\"");
+                }
+            }
+            if (Steps.Count > 0)
+            {
+                sb.AppendLine($"  steps:");
+                foreach (Template template in Steps)
+                {
+                    lines = template.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                    for (int i = 0; i < lines.Length; i++)
+                    {
+                        lines[i] = lines[i].PadLeft(lines[i].Length + 2);
+                    }
+                    sb.AppendLine($"{new StringBuilder(string.Join(Environment.NewLine, lines))}");
                 }
             }
             return sb.ToString();
