@@ -1,12 +1,11 @@
 ﻿using ModPosh.Pipelines.Serializers;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace ModPosh.Pipelines.Ado
 {
     public class Pool
     {
-        private static readonly Regex NameRegex = new Regex(@"^[A-Za-z0-9_]+$", RegexOptions.Compiled);
+        private static readonly Regex NameRegex = new Regex(@"^[A-Za-z0-9_\$\(\)]+$", RegexOptions.Compiled);
         private string _name = string.Empty;
         public string Name
         {

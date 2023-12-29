@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Collections;
+﻿using ModPosh.Pipelines.Ado;
 using System.Management.Automation;
-using ModPosh.Pipelines.Ado;
 
 namespace ModPosh.Pipelines.Cmdlets
 {

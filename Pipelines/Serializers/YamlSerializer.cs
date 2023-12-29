@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Management.Automation.Runspaces;
+﻿using ModPosh.Pipelines.Ado;
 using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using ModPosh.Pipelines.Ado;
 
 namespace ModPosh.Pipelines.Serializers
 {
@@ -13,30 +7,37 @@ namespace ModPosh.Pipelines.Serializers
     {
         public string Serialize<T>(T obj)
         {
-            if (obj is Stage stage)
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj), "Cannot serialize a null object.");
+            try
             {
-                return SerializeTemplate(stage);
+                if (obj is Stage stage)
+                {
+                    return SerializeTemplate(stage);
+                }
+                if (obj is Job job)
+                {
+                    return SerializeTemplate(job);
+                }
+                if (obj is Template template)
+                {
+                    return SerializeTemplate(template);
+                }
+                if (obj is Pool pool)
+                {
+                    return SerializeTemplate(pool);
+                }
+                if (obj is Ado.Pipeline pipeline)
+                {
+                    return SerializeTemplate(pipeline);
+                }
             }
-            if (obj is Job job)
+            catch (Exception ex)
             {
-                return SerializeTemplate(job);
+                throw new SerializationException($"Failed to serialize object of type {typeof(T).Name}", ex);
             }
-            if (obj is Template template)
-            {
-                return SerializeTemplate(template);
-            }
-            if (obj is Pool pool)
-            {
-                return SerializeTemplate(pool);
-            }
-            if (obj is Ado.Pipeline pipeline)
-            {
-                return SerializeTemplate(pipeline);
-            }
-
             throw new ArgumentException("Object type is not supported", nameof(obj));
         }
-
         private string SerializeTemplate(Stage stage)
         {
             StringBuilder sb = new StringBuilder();
@@ -74,7 +75,7 @@ namespace ModPosh.Pipelines.Serializers
                 }
                 sb.AppendLine($"{new StringBuilder(string.Join(Environment.NewLine, lines))}");
             }
-            return sb.ToString();
+            return sb.ToString().Trim();
         }
         private string SerializeTemplate(Job job)
         {
@@ -113,7 +114,7 @@ namespace ModPosh.Pipelines.Serializers
                     sb.AppendLine($"{new StringBuilder(string.Join(Environment.NewLine, lines))}");
                 }
             }
-            return sb.ToString();
+            return sb.ToString().Trim();
         }
         private string SerializeTemplate(Template template)
         {
@@ -130,7 +131,7 @@ namespace ModPosh.Pipelines.Serializers
                         sb.AppendLine($"    {parameter.Key}: \"{parameter.Value}\"");
                 }
             }
-            return sb.ToString();
+            return sb.ToString().Trim();
         }
         private string SerializeTemplate(Pool pool)
         {
@@ -154,7 +155,7 @@ namespace ModPosh.Pipelines.Serializers
                     }
                 }
             }
-            return sb.ToString();
+            return sb.ToString().Trim();
         }
         private string SerializeTemplate(Ado.Pipeline pipeline)
         {
@@ -165,7 +166,12 @@ namespace ModPosh.Pipelines.Serializers
             {
                 sb.AppendLine(stage.ToString());
             }
-            return sb.ToString();
+            return sb.ToString().Trim();
         }
+    }
+    public class SerializationException : Exception
+    {
+        public SerializationException(string message, Exception innerException)
+            : base(message, innerException) { }
     }
 }

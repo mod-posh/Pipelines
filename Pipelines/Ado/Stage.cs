@@ -1,12 +1,11 @@
 ﻿using ModPosh.Pipelines.Serializers;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace ModPosh.Pipelines.Ado
 {
     public class Stage
     {
-        private static readonly Regex NameRegex = new Regex(@"^[A-Za-z0-9_]+$", RegexOptions.Compiled);
+        private static readonly Regex NameRegex = new Regex(@"^[A-Za-z0-9_\$\(\)]+$", RegexOptions.Compiled);
         private string _name = string.Empty;
         private string[] _dependsOn = Array.Empty<string>();
         public string Name
@@ -35,7 +34,7 @@ namespace ModPosh.Pipelines.Ado
             }
         }
         public string Condition { get; set; } = string.Empty;
-        public Dictionary<string,string> Variables { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> Variables { get; set; } = new Dictionary<string, string>();
         public List<Job> Jobs { get; set; } = new List<Job>();
         public Stage() { }
         public Stage(string name)
@@ -60,7 +59,7 @@ namespace ModPosh.Pipelines.Ado
             DependsOn = dependsOn;
             Condition = condition;
         }
-        public Stage(string name, string displayName, string[] dependsOn, string condition, Dictionary<string,string> variables)
+        public Stage(string name, string displayName, string[] dependsOn, string condition, Dictionary<string, string> variables)
         {
             Name = name;
             DisplayName = displayName;
@@ -68,7 +67,7 @@ namespace ModPosh.Pipelines.Ado
             Condition = condition;
             Variables = variables;
         }
-        public Stage(string name, string displayName, string[] dependsOn, string condition, Dictionary<string,string> variables, List<Job> jobs)
+        public Stage(string name, string displayName, string[] dependsOn, string condition, Dictionary<string, string> variables, List<Job> jobs)
         {
             Name = name;
             DisplayName = displayName;
