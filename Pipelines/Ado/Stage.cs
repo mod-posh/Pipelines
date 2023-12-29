@@ -8,6 +8,7 @@ namespace ModPosh.Pipelines.Ado
     {
         private static readonly Regex NameRegex = new Regex(@"^[A-Za-z0-9_]+$", RegexOptions.Compiled);
         private string _name = string.Empty;
+        private string[] _dependsOn = Array.Empty<string>();
         public string Name
         {
             get => _name;
@@ -20,8 +21,19 @@ namespace ModPosh.Pipelines.Ado
                 _name = value;
             }
         }
-        public string DisplayName { get; set; } = string.Empty; 
-        public string[] DependsOn { get;set; } = Array.Empty<string>();
+        public string DisplayName { get; set; } = string.Empty;
+        public string[] DependsOn
+        {
+            get => _dependsOn;
+            set
+            {
+                if (value.Any(dependency => !NameRegex.IsMatch(dependency)))
+                {
+                    throw new ArgumentException("Each item in DependsOn can only contain A-Z, a-z, 0-9, and underscore.");
+                }
+                _dependsOn = value;
+            }
+        }
         public string Condition { get; set; } = string.Empty;
         public Dictionary<string,string> Variables { get; set; } = new Dictionary<string, string>();
         public List<Job> Jobs { get; set; } = new List<Job>();
