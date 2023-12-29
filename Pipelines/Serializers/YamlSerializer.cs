@@ -135,7 +135,10 @@ namespace ModPosh.Pipelines.Serializers
         private string SerializeTemplate(Pool pool)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"name: {pool.Name}");
+            if (pool.Name.Contains(' '))
+                sb.AppendLine($"name: \"{pool.Name}\"");
+            else
+                sb.AppendLine($"name: {pool.Name}");
             if (pool.Demands.Count() > 0)
             {
                 if (pool.Demands.Count() == 1)
