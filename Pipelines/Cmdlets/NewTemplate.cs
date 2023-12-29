@@ -7,7 +7,7 @@ using ModPosh.Pipelines.Ado;
 
 namespace ModPosh.Pipelines.Cmdlets
 {
-    [Cmdlet(VerbsCommon.New, "Template", HelpUri = "")]
+    [Cmdlet(VerbsCommon.New, "Template", HelpUri = "https://github.com/mod-posh/Pipelines/blob/v1.4.0.0/docs/New-Template.md#new-template")]
     [OutputType(typeof(Template))]
     [CmdletBinding(PositionalBinding = true)]
     public class NewTemplate : PSCmdlet

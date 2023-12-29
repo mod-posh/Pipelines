@@ -1,6 +1,10 @@
-| Latest Version | PowerShell Gallery | Issues | License | Discord |
-|-----------------|----------------|----------------|----------------|----------------|
-| [![Latest Version](https://img.shields.io/github/v/tag/mod-posh/Pipelines)](https://github.com/mod-posh/Pipelines/tags) | [![Powershell Gallery](https://img.shields.io/powershellgallery/dt/Pipelines)](https://www.powershellgallery.com/packages/Pipelines) | [![GitHub issues](https://img.shields.io/github/issues/mod-posh/Pipelines)](https://github.com/mod-posh/Pipelines/issues) | [![GitHub license](https://img.shields.io/github/license/mod-posh/Pipelines)](https://github.com/mod-posh/Pipelines/blob/master/LICENSE) | [![Discord Server](https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0b5493894cf60b300587_full_logo_white_RGB.svg)]() |
+---
+Module Name: Pipelines
+Module Guid: cff00216-d0d0-4565-af27-31d9c0400884
+Download Help Link: https://raw.githubusercontent.com/mod-posh/Pipelines/main/cabs/
+Help Version: 1.4.0.0
+Locale: en-US
+---
 
 # Pipelines Module
 
@@ -10,7 +14,7 @@ A PowerShell module for working with ADO/Github pipelines
 
 ## Pipelines Cmdlets
 
-### [New-Job](Docs/New-Job.md)
+### [New-Job](New-Job.md)
 
 This Cmdlet creates an Ado Job object
 
@@ -21,7 +25,7 @@ job is the smallest unit of work that can be scheduled to run.
 Azure Pipelines does not support job priority for YAML pipelines. To control
 when jobs run, you can specify conditions and dependencies.
 
-### [New-Pipeline](Docs/New-Pipeline.md)
+### [New-Pipeline](New-Pipeline.md)
 
 This Cmdlet creates an Ado Pipeline object
 
@@ -29,23 +33,23 @@ A pipeline defines the continuous integration and deployment process for your
 app. It's made up of one or more stages. It can be thought of as a workflow that
 defines how your test, build, and deployment steps are run.
 
-### [New-Pool](Docs/New-Pool.md)
+### [New-Pool](New-Pool.md)
 
 This Cmdlet creates an Ado Pool object
 
 The pool keyword specifies which pool to use for a job of the pipeline. A pool
 specification also holds information about the job's strategy for running.
 
-### [New-Stage](Docs/New-Stage.md)
+### [New-Stage](New-Stage.md)
 
 This Cmdlet creates an Ado Stage object
 
 A stage is a logical boundary in the pipeline. It can be used to mark separation
-of concerns (Docs/for example, Build, QA, and production). Each stage contains one or
+of concerns (for example, Build, QA, and production). Each stage contains one or
 more jobs. When you define multiple stages in a pipeline, by default, they run
 one after the other.
 
-### [New-Template](Docs/New-Template.md)
+### [New-Template](New-Template.md)
 
 This Cmdlet creates an Ado Template object
 
