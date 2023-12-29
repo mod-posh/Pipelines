@@ -1,11 +1,11 @@
-$script:ModuleName = '';                                                                 # The name of your PowerShell module
-$script:ProjectName = "";                                                                # The name of your C# Project
-$script:DotnetVersion = "net6.0";                                                        # The version of .Net the project is targeted to
-$script:GithubOrg = ''                                                                   # This could be your github username if you're not working in a Github Org
+$script:ModuleName = 'Pipelines';                                                        # The name of your PowerShell module
+$script:ProjectName = "Pipelines";                                                       # The name of your C# Project
+$script:DotnetVersion = "net7.0";                                                        # The version of .Net the project is targeted to
+$script:GithubOrg = 'mod-posh'                                                           # This could be your github username if you're not working in a Github Org
 $script:Repository = "https://github.com/$($script:GithubOrg)";                          # This is the Github Repo
-$script:DeployBranch = 'master';                                                         # The branch that we deploy from, typically master or main
+$script:DeployBranch = 'main';                                                           # The branch that we deploy from, typically master or main
 $script:Source = Join-Path $PSScriptRoot $script:ModuleName;                             # This will be the root of your Module Project, not the Repository Root
-#$script:Source = $PSScriptRoot;                                                          # This will be the root of your Module Project
+#$script:Source = $PSScriptRoot;                                                         # This will be the root of your Module Project
 $script:Output = Join-Path $PSScriptRoot 'output';                                       # The module will be output into this folder
 $script:Docs = Join-Path $PSScriptRoot 'docs';                                           # The root folder for the PowerShell Module
 $script:Destination = Join-Path $Output $script:ModuleName;                              # The PowerShell module folder that contains the manifest and other files
