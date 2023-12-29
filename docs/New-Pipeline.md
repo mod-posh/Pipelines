@@ -9,7 +9,7 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-{{ Fill in the Synopsis }}
+This Cmdlet creates an Ado Pipeline object
 
 ## SYNTAX
 
@@ -19,23 +19,29 @@ New-Pipeline [-Name] <String> [[-Stages] <Stage[]>] [-ProgressAction <ActionPref
 
 ## DESCRIPTION
 
-{{ Fill in the Description }}
+A pipeline defines the continuous integration and deployment process for your
+app. It's made up of one or more stages. It can be thought of as a workflow that
+defines how your test, build, and deployment steps are run.
 
 ## EXAMPLES
 
 ### Example 1
 
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> New-Pipeline -Name 'Sample'
+
+Name   Stages
+----   ------
+Sample {}
 ```
 
-{{ Add example description here }}
+This creates a Pipeline object on the Command line.
 
 ## PARAMETERS
 
 ### -Name
 
-{{ Fill Name Description }}
+Pipeline run number.
 
 ```yaml
 Type: System.String
@@ -49,25 +55,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ProgressAction
-
-{{ Fill ProgressAction Description }}
-
-```yaml
-Type: System.Management.Automation.ActionPreference
-Parameter Sets: (All)
-Aliases: proga
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Stages
 
-{{ Fill Stages Description }}
+Stages are groups of jobs that can run without human intervention.
 
 ```yaml
 Type: ModPosh.Pipelines.Ado.Stage[]
@@ -96,3 +86,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+
+[Pipelines](https://learn.microsoft.com/en-us/azure/devops/pipelines/yaml-schema/pipeline?view=azure-pipelines)
+
+[Stages](https://learn.microsoft.com/en-us/azure/devops/pipelines/yaml-schema/stages?view=azure-pipelines)

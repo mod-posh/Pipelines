@@ -9,7 +9,7 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-{{ Fill in the Synopsis }}
+This Cmdlet creates an Ado Job object
 
 ## SYNTAX
 
@@ -20,23 +20,34 @@ New-Job [-Name] <String> [[-Pool] <Pool>] [[-Variables] <Hashtable>] [[-Steps] <
 
 ## DESCRIPTION
 
-{{ Fill in the Description }}
+You can organize your pipeline into jobs. Every pipeline has at least one job.
+A job is a series of steps that run sequentially as a unit. In other words, a
+job is the smallest unit of work that can be scheduled to run.
+
+Azure Pipelines does not support job priority for YAML pipelines. To control
+when jobs run, you can specify conditions and dependencies.
 
 ## EXAMPLES
 
 ### Example 1
 
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> New-Job -Name MyJob -Pool $Pool -Variables @{'Environment'="$[ stageDependencies.DetermineEnvironment.GetVariables.outputs['SetVariables.Environment'] ]"}
+
+Name      : MyJob
+Pool      : name: $(poolName)
+            demands: Agent.Name -equals $(AgentName)
+Variables : {[Environment, $[ stageDependencies.DetermineEnvironment.GetVariables.outputs['SetVariables.Environment'] ]]}
+Steps     : {}
 ```
 
-{{ Add example description here }}
+This creates a Job object on the Command line.
 
 ## PARAMETERS
 
 ### -Name
 
-{{ Fill Name Description }}
+Required as first property. ID of the job.
 
 ```yaml
 Type: System.String
@@ -52,7 +63,7 @@ Accept wildcard characters: False
 
 ### -Pool
 
-{{ Fill Pool Description }}
+Pool where this job will run.
 
 ```yaml
 Type: ModPosh.Pipelines.Ado.Pool
@@ -66,25 +77,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ProgressAction
-
-{{ Fill ProgressAction Description }}
-
-```yaml
-Type: System.Management.Automation.ActionPreference
-Parameter Sets: (All)
-Aliases: proga
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Steps
 
-{{ Fill Steps Description }}
+A list of steps to run.
 
 ```yaml
 Type: ModPosh.Pipelines.Ado.Template[]
@@ -100,7 +95,7 @@ Accept wildcard characters: False
 
 ### -Variables
 
-{{ Fill Variables Description }}
+Job-specific variables.
 
 ```yaml
 Type: System.Collections.Hashtable
@@ -129,3 +124,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+
+[Jobs in pipeline](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/phases?view=azure-devops&tabs=yaml)
+
+[Jobs](https://learn.microsoft.com/en-us/azure/devops/pipelines/yaml-schema/jobs?view=azure-pipelines)
+
+[Job](https://learn.microsoft.com/en-us/azure/devops/pipelines/yaml-schema/jobs-job?view=azure-pipelines)
+
+[Steps](https://learn.microsoft.com/en-us/azure/devops/pipelines/yaml-schema/steps?view=azure-pipelines)
+
+[Variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/yaml-schema/variables?view=azure-pipelines)

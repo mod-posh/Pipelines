@@ -9,7 +9,7 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-{{ Fill in the Synopsis }}
+This Cmdlet creates an Ado Template object
 
 ## SYNTAX
 
@@ -20,23 +20,29 @@ New-Template [-Name] <String> [[-Parameters] <Hashtable>] [-ProgressAction <Acti
 
 ## DESCRIPTION
 
-{{ Fill in the Description }}
+Templates let you define reusable content, logic, and parameters in YAML pipelines.
+To work with templates effectively, you'll need to have a basic understanding of
+Azure Pipelines key concepts such as stages, steps, and jobs.
 
 ## EXAMPLES
 
 ### Example 1
 
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> New-Template -Name 'template.yml' -Parameters @{'Environment'='$(Environment)'}
+
+Name         Parameters
+----         ----------
+template.yml {[Environment, $(Environment)]}
 ```
 
-{{ Add example description here }}
+This creates a template object on the Command line.
 
 ## PARAMETERS
 
 ### -Name
 
-{{ Fill Name Description }}
+Required as first property. Reference to a template for this deployment.
 
 ```yaml
 Type: System.String
@@ -52,7 +58,9 @@ Accept wildcard characters: False
 
 ### -Parameters
 
-{{ Fill Parameters Description }}
+You can specify parameters and their data types in a template and reference
+those parameters in a pipeline. With templateContext, you can also pass
+properties to stages, steps, and jobs that are used as parameters in a template.
 
 ```yaml
 Type: System.Collections.Hashtable
@@ -61,22 +69,6 @@ Aliases:
 
 Required: False
 Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ProgressAction
-
-{{ Fill ProgressAction Description }}
-
-```yaml
-Type: System.Management.Automation.ActionPreference
-Parameter Sets: (All)
-Aliases: proga
-
-Required: False
-Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -97,3 +89,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+
+[Templates](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/templates?view=azure-devops&pivots=templates-includes)
+
+[Template Parameters](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/template-parameters?view=azure-devops)

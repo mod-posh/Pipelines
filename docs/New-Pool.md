@@ -9,7 +9,7 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-{{ Fill in the Synopsis }}
+This Cmdlet creates an Ado Pool object
 
 ## SYNTAX
 
@@ -19,23 +19,33 @@ New-Pool [-Name] <String> [[-Demands] <String[]>] [-ProgressAction <ActionPrefer
 
 ## DESCRIPTION
 
-{{ Fill in the Description }}
+The pool keyword specifies which pool to use for a job of the pipeline. A pool
+specification also holds information about the job's strategy for running.
 
 ## EXAMPLES
 
 ### Example 1
 
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> New-Pool -Name '$(poolName)' -Demands 'Agent.Name -equals $(AgentName)'
+
+Name        Demands
+----        -------
+$(poolName) {Agent.Name -equals $(AgentName)}
 ```
 
-{{ Add example description here }}
+This creates a Pool object on the Command line.
 
 ## PARAMETERS
 
 ### -Demands
 
-{{ Fill Demands Description }}
+Demands and capabilities are designed for use with self-hosted agents so that
+jobs can be matched with an agent that meets the requirements of the job.
+When using Microsoft-hosted agents, you select an image for the agent that
+matches the requirements of the job, so although it is possible to add
+capabilities to a Microsoft-hosted agent, you don't need to use capabilities
+with Microsoft-hosted agents.
 
 ```yaml
 Type: System.String[]
@@ -51,7 +61,7 @@ Accept wildcard characters: False
 
 ### -Name
 
-{{ Fill Name Description }}
+Name of a pool
 
 ```yaml
 Type: System.String
@@ -60,22 +70,6 @@ Aliases:
 
 Required: True
 Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ProgressAction
-
-{{ Fill ProgressAction Description }}
-
-```yaml
-Type: System.Management.Automation.ActionPreference
-Parameter Sets: (All)
-Aliases: proga
-
-Required: False
-Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -96,3 +90,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+
+[Pool](https://learn.microsoft.com/en-us/azure/devops/pipelines/yaml-schema/pool?view=azure-pipelines)
+
+[Pool Demands](https://learn.microsoft.com/en-us/azure/devops/pipelines/yaml-schema/pool-demands?view=azure-pipelines)
