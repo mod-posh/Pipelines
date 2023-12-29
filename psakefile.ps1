@@ -105,7 +105,7 @@ Task UpdateReadme -Description "Update the README file" -Action {
  Write-Output $Columns | Out-File $readMe.FullName -Append
  Write-Output "| $($VersionBadge) | $($GalleryBadge) | $($IssueBadge) | $($LicenseBadge) | $($DiscordBadge) |" | Out-File $readMe.FullName -Append
 
- Get-Content "$($script:Docs)\$($script:ModuleName).md" | Select-Object -Skip 8 | ForEach-Object { $_.Replace('(', '(Docs/') } | Out-File $readMe.FullName -Append
+ Get-Content "$($script:Docs)\$($script:ModuleName).md" | Select-Object -Skip 8 | ForEach-Object { $_.Replace('(', '(docs/') } | Out-File $readMe.FullName -Append
  Write-Output "" | Out-File $readMe.FullName -Append
 }
 
