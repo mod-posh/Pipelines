@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using ModPosh.Pipelines.Serializers;
+using System.Text;
 
 namespace ModPosh.Pipelines.Ado
 {
@@ -18,20 +19,15 @@ namespace ModPosh.Pipelines.Ado
         }
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"- template: {Name}");
-            if (Parameters.Count > 0)
+            ISerializer serializer = new YamlSerializer();
+            try
             {
-                sb.AppendLine($"  parameters:");
-                foreach (var parameter in Parameters)
-                {
-                    if (parameter.Value.StartsWith("$"))
-                        sb.AppendLine($"    {parameter.Key}: {parameter.Value}");
-                    else
-                        sb.AppendLine($"    {parameter.Key}: \"{parameter.Value}\"");
-                }
+                return serializer.Serialize(this);
             }
-            return sb.ToString();
+            catch (Exception ex)
+            {
+                return $"Error during serialization: {ex.Message}";
+            }
         }
     }
 }

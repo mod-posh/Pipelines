@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using ModPosh.Pipelines.Serializers;
+using System.Text;
 
 namespace ModPosh.Pipelines.Ado
 {
@@ -52,42 +53,15 @@ namespace ModPosh.Pipelines.Ado
         }
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"- stage: {Name}");
-            if (string.IsNullOrEmpty(DisplayName) == false)
-                sb.AppendLine($"  displayName: {DisplayName}");
-            if (DependsOn.Length > 0)
+            ISerializer serializer = new YamlSerializer();
+            try
             {
-                sb.AppendLine($"  dependsOn:");
-                foreach (string Dependency in DependsOn)
-                {
-                    sb.AppendLine($"  - {Dependency}");
-                }
+                return serializer.Serialize(this);
             }
-            if (string.IsNullOrEmpty(Condition) == false)
-                sb.AppendLine($"  condition: {Condition}");
-            if (Variables.Count > 0)
+            catch (Exception ex)
             {
-                sb.AppendLine($"  variables:");
-                foreach (var variable in Variables)
-                {
-                    if (variable.Value.StartsWith("$"))
-                        sb.AppendLine($"    {variable.Key}: {variable.Value}");
-                    else
-                        sb.AppendLine($"    {variable.Key}: '{variable.Value}'");
-                }
+                return $"Error during serialization: {ex.Message}";
             }
-            sb.AppendLine($"  jobs:");
-            foreach (Job job in Jobs)
-            {
-                string[] lines = job.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-                for (int i = 0; i < lines.Length; i++)
-                {
-                    lines[i] = lines[i].PadLeft(lines[i].Length + 2);
-                }
-                sb.AppendLine($"{new StringBuilder(string.Join(Environment.NewLine, lines))}");
-            }
-            return sb.ToString();
         }
     }
 }

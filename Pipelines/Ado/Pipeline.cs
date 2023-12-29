@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModPosh.Pipelines.Serializers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,14 +23,15 @@ namespace ModPosh.Pipelines.Ado
         }
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"name: {Name}");
-            sb.AppendLine("stages:");
-            foreach (Stage stage in Stages)
+            ISerializer serializer = new YamlSerializer();
+            try
             {
-                sb.AppendLine(stage.ToString());
+                return serializer.Serialize(this);
             }
-            return sb.ToString();
+            catch (Exception ex)
+            {
+                return $"Error during serialization: {ex.Message}";
+            }
         }
     }
 }
