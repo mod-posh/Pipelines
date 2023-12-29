@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation.Runspaces;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -28,7 +29,7 @@ namespace ModPosh.Pipelines.Serializers
             {
                 return SerializeTemplate(pool);
             }
-            if (obj is Pipeline pipeline)
+            if (obj is Ado.Pipeline pipeline)
             {
                 return SerializeTemplate(pipeline);
             }
@@ -77,19 +78,91 @@ namespace ModPosh.Pipelines.Serializers
         }
         private string SerializeTemplate(Job job)
         {
-            // Serialization logic here
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"- job: {job.Name}");
+            sb.AppendLine($"  pool: ");
+
+            string[] lines = job.Pool.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                lines[i] = lines[i].PadLeft(lines[i].Length + 4);
+            }
+            sb.AppendLine($"{new StringBuilder(string.Join(Environment.NewLine, lines))}");
+
+            if (job.Variables.Count > 0)
+            {
+                sb.AppendLine($"  variables:");
+                foreach (var variable in job.Variables)
+                {
+                    if (variable.Value.StartsWith("$"))
+                        sb.AppendLine($"    {variable.Key}: {variable.Value}");
+                    else
+                        sb.AppendLine($"    {variable.Key}: \"{variable.Value}\"");
+                }
+            }
+            if (job.Steps.Count > 0)
+            {
+                sb.AppendLine($"  steps:");
+                foreach (Template template in job.Steps)
+                {
+                    lines = template.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                    for (int i = 0; i < lines.Length; i++)
+                    {
+                        lines[i] = lines[i].PadLeft(lines[i].Length + 2);
+                    }
+                    sb.AppendLine($"{new StringBuilder(string.Join(Environment.NewLine, lines))}");
+                }
+            }
+            return sb.ToString();
         }
         private string SerializeTemplate(Template template)
         {
-            // Serialization logic here
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"- template: {template.Name}");
+            if (template.Parameters.Count > 0)
+            {
+                sb.AppendLine($"  parameters:");
+                foreach (var parameter in template.Parameters)
+                {
+                    if (parameter.Value.StartsWith("$"))
+                        sb.AppendLine($"    {parameter.Key}: {parameter.Value}");
+                    else
+                        sb.AppendLine($"    {parameter.Key}: \"{parameter.Value}\"");
+                }
+            }
+            return sb.ToString();
         }
         private string SerializeTemplate(Pool pool)
         {
-            // Serialization logic here
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"name: {pool.Name}");
+            if (pool.Demands.Count() > 0)
+            {
+                if (pool.Demands.Count() == 1)
+                {
+                    sb.Append($"demands: {pool.Demands[0]}");
+                }
+                else
+                {
+                    sb.AppendLine($"demands:");
+                    foreach (string Demand in pool.Demands)
+                    {
+                        sb.AppendLine($"- {Demand}");
+                    }
+                }
+            }
+            return sb.ToString();
         }
-        private string SerializeTemplate(Pipeline pipeline)
+        private string SerializeTemplate(Ado.Pipeline pipeline)
         {
-            // Serialization logic here
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"name: {pipeline.Name}");
+            sb.AppendLine("stages:");
+            foreach (Stage stage in pipeline.Stages)
+            {
+                sb.AppendLine(stage.ToString());
+            }
+            return sb.ToString();
         }
     }
 }
