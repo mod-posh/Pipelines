@@ -3,7 +3,7 @@ using System.Management.Automation;
 
 namespace ModPosh.Pipelines.Cmdlets
 {
-    [Cmdlet(VerbsCommon.New, "Pipeline", HelpUri = "https://github.com/mod-posh/Pipelines/blob/v1.5.0.0/docs/New-Pipeline.md#new-pipeline")]
+    [Cmdlet(VerbsCommon.New, "Pipeline", HelpUri = "https://github.com/mod-posh/Pipelines/blob/v1.6.0.0/docs/New-Pipeline.md#new-pipeline")]
     [OutputType(typeof(Pipeline))]
     [CmdletBinding(PositionalBinding = true)]
     public class NewPipeline : PSCmdlet
