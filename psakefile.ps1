@@ -62,7 +62,7 @@ else
 Write-Host -ForegroundColor Green "ModuleName     : $($script:ModuleName)";
 Write-Host -ForegroundColor Green "ProjectName    : $($script:ProjectName)";
 Write-Host -ForegroundColor Green "DotnetVersion  : $($script:DotnetVersion)";
-Write-Host -ForegroundColor Green "Githuborg      : $($script:Source)";
+Write-Host -ForegroundColor Green "GithubOrg      : $($script:GithubOrg)";
 Write-Host -ForegroundColor Green "Source         : $($script:Source)";
 Write-Host -ForegroundColor Green "Output         : $($script:Output)";
 Write-Host -ForegroundColor Green "Docs           : $($script:Docs)";
@@ -177,7 +177,21 @@ Task CreateCabFile -Description "Create cab file for download" -Action {
 }
 
 Task PesterTest -description "Test module" -action {
- $TestResults = Invoke-Pester -OutputFormat NUnitXml -OutputFile "$($PSScriptRoot)\$($script:TestFile)";
+ if (!(Get-Module -Name $script:ModuleName )) { Import-Module -Name $script:Destination }
+ $pesterConfig = New-PesterConfiguration @{
+  Run = @{
+      Path = "$($script:Source)\Tests\CmdletTests"
+  }
+  Output = @{
+      Verbosity = 'Detailed'
+  }
+  TestResult = @{
+      Enabled = $true
+      OutputPath = "$($PSScriptRoot)\$($script:TestFile)"
+      TestResultFormat = 'NUnitXml'
+  }
+}
+ $TestResults = Invoke-Pester -Configuration $pesterConfig
  if ($TestResults.FailedCount -gt 0)
  {
   Write-Error "Failed [$($TestResults.FailedCount)] Pester tests"
