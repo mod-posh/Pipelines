@@ -57,7 +57,7 @@ Describe 'New-Stage Cmdlet Tests' {
             # Ensure $result.Variables does not contain extra keys
             foreach ($key in $result.Variables.Keys) {
                 $variables.ContainsKey($key) | Should -Be $true
-            }
+        }
 }
         It 'Can have Jobs parameter' {
             $jobs = @([ModPosh.Pipelines.Ado.Job]::new(), [ModPosh.Pipelines.Ado.Job]::new())
