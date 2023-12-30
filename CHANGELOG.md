@@ -5,6 +5,21 @@ All changes to this module should be reflected in this document.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [[1.6.0.0]](https://github.com/mod-posh/Pipelines/releases/tag/v1.6.0.0) - 2023-12-30
+
+This release added Pester Testing to the module
+
+What's changed:
+
+1. Added Pester to NewPipeline [Issue #22](https://github.com/mod-posh/Pipelines/issues/22)
+2. Added Pester to NewStage [Issue #24](https://github.com/mod-posh/Pipelines/issues/24)
+3. Added Pester to NewJob [Issue #21](https://github.com/mod-posh/Pipelines/issues/21)
+4. Added Pester to NewPool [Issue #23](https://github.com/mod-posh/Pipelines/issues/23)
+5. Added Pester to NewTemplate [Issue #25](https://github.com/mod-posh/Pipelines/issues/25)
+6. Updated Psakescript with the latest Pester version
+
+---
+
 ## [[1.5.0.0]](https://github.com/mod-posh/Pipelines/releases/tag/v1.5.0.0) - 2023-12-29
 
 This release added error handling and validation to inputs across the module.
