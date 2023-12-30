@@ -4,6 +4,7 @@ $script:DotnetVersion = "net7.0";                                               
 $script:GithubOrg = 'mod-posh'                                                                  # This could be your github username if you're not working in a Github Org
 $script:Repository = "https://github.com/$($script:GithubOrg)";                                 # This is the Github Repo
 $script:DeployBranch = 'main';                                                                  # The branch that we deploy from, typically master or main
+$script:Root = $PSScriptRoot;                                                                   # This will be the root of your Module Project, not the Repository Root
 $script:Source = Join-Path $PSScriptRoot $script:ModuleName;                                    # This will be the root of your Module Project, not the Repository Root
 $script:Output = Join-Path $PSScriptRoot 'output';                                              # The module will be output into this folder
 $script:Docs = Join-Path $PSScriptRoot 'docs';                                                  # The root folder for the PowerShell Module
@@ -63,6 +64,7 @@ Write-Host -ForegroundColor Green "ModuleName     : $($script:ModuleName)";
 Write-Host -ForegroundColor Green "ProjectName    : $($script:ProjectName)";
 Write-Host -ForegroundColor Green "DotnetVersion  : $($script:DotnetVersion)";
 Write-Host -ForegroundColor Green "GithubOrg      : $($script:GithubOrg)";
+Write-Host -ForegroundColor Green "Root           : $($script:Root)";
 Write-Host -ForegroundColor Green "Source         : $($script:Source)";
 Write-Host -ForegroundColor Green "Output         : $($script:Output)";
 Write-Host -ForegroundColor Green "Docs           : $($script:Docs)";
@@ -85,7 +87,8 @@ Task Deploy -depends CheckBranch, ReleaseNotes, PublishModule, NewTaggedRelease,
 
 Task Clean -depends CleanProject {
  $null = Remove-Item $Output -Recurse -ErrorAction Ignore
- $null = New-Item -Type Directory -Path $Destination
+ $null = New-Item -Type Directory -Path $Destination -ErrorAction Ignore
+ $null = Remove-Item "$($script:Root)\TestResults*.xml"
 }
 
 Task UpdateReadme -Description "Update the README file" -Action {
