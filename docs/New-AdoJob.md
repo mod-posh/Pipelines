@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# New-Job
+# New-AdoJob
 
 ## SYNOPSIS
 
@@ -14,7 +14,7 @@ This Cmdlet creates an Ado Job object
 ## SYNTAX
 
 ```powershell
-New-Job [-Name] <String> [[-Pool] <Pool>] [[-Variables] <Hashtable>] [[-Steps] <Template[]>]
+New-AdoJob [-Name] <String> [[-Pool] <Pool>] [[-Variables] <Hashtable>] [[-Steps] <Template[]>]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
@@ -32,7 +32,7 @@ when jobs run, you can specify conditions and dependencies.
 ### Example 1
 
 ```powershell
-PS C:\> New-Job -Name MyJob -Pool $Pool -Variables @{'Environment'="$[ stageDependencies.DetermineEnvironment.GetVariables.outputs['SetVariables.Environment'] ]"}
+PS C:\> New-AdoJob -Name MyJob -Pool $Pool -Variables @{'Environment'="$[ stageDependencies.DetermineEnvironment.GetVariables.outputs['SetVariables.Environment'] ]"}
 
 Name      : MyJob
 Pool      : name: $(poolName)

@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# New-Pipeline
+# New-AdoAdoPipeline
 
 ## SYNOPSIS
 
@@ -14,7 +14,7 @@ This Cmdlet creates an Ado Pipeline object
 ## SYNTAX
 
 ```powershell
-New-Pipeline [-Name] <String> [[-Stages] <Stage[]>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+New-AdoAdoPipeline [-Name] <String> [[-Stages] <Stage[]>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,7 +28,7 @@ defines how your test, build, and deployment steps are run.
 ### Example 1
 
 ```powershell
-PS C:\> New-Pipeline -Name 'Sample'
+PS C:\> New-AdoAdoPipeline -Name 'Sample'
 
 Name   Stages
 ----   ------

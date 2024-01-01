@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# New-Stage
+# New-AdoStage
 
 ## SYNOPSIS
 
@@ -14,7 +14,7 @@ This Cmdlet creates an Ado Stage object
 ## SYNTAX
 
 ```powershell
-New-Stage [-Name] <String> [[-DisplayName] <String>] [[-DependsOn] <String[]>] [[-Condition] <String>]
+New-AdoStage [-Name] <String> [[-DisplayName] <String>] [[-DependsOn] <String[]>] [[-Condition] <String>]
  [[-Variables] <Hashtable>] [[-Jobs] <Job[]>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
@@ -30,7 +30,7 @@ one after the other.
 ### Example 1
 
 ```powershell
-PS C:\> New-Stage -Name MyStage -Variables @{'ServiceAccountName'='sa'} -DependsOn @('OtherStage') -Condition "eq(variables['BuildSuccess'], 'TRUE')"
+PS C:\> New-AdoStage -Name MyStage -Variables @{'ServiceAccountName'='sa'} -DependsOn @('OtherStage') -Condition "eq(variables['BuildSuccess'], 'TRUE')"
 
 Name        : MyStage
 DisplayName :

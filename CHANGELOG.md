@@ -5,7 +5,14 @@ All changes to this module should be reflected in this document.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [[1.7.0.0]](https://github.com/mod-posh/Pipelines/releases/tag/v1.7.0.0) - 2023-12-30
+## [[2.0.0.0]](https://github.com/mod-posh/Pipelines/releases/tag/v2.0.0.0) - 2023-12-30
+
+Breaking Change: Renamed cmdlets to support similar object names between ADO and Github
+
+1. Resolve name class between classes and cmdlets [Issue [#48](https://github.com/mod-posh/Pipelines/issues/48)]
+   1. Renamed existing cmdlets to add a prefix Ado (will be Gha for Github)
+   2. Renamed existing help documentation and urls to support this change
+   3. Incremented major version to 2.0.0.0 as this is a breaking change
 
 Adding limited support for Github Actions in this release
 
@@ -36,6 +43,7 @@ What's Changed:
 
 1. Added New version to Changelog
 2. Incremented Version Numbers
+3. Renamed all existing cmdlets
 
 ---
 

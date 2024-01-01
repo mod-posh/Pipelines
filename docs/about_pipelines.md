@@ -16,14 +16,14 @@ Once you have installed and imported the module into your environment, you will
 want to create your first pipeline. This process is very straightforward.
 
 ```powershell
-$Pipeline = New-Pipeline -Name 'MyPipelines'
+$Pipeline = New-AdoPipeline -Name 'MyPipelines'
 ```
 
 You now have a pipeline object, but there are no stages currently setup, so we
 need to create a stage.
 
 ```powershell
-$Stage = New-Stage -Name MyStage -Variables @{'ServiceAccountName'='sa'} `
+$Stage = New-AdoStage -Name MyStage -Variables @{'ServiceAccountName'='sa'} `
 -DependsOn @('OtherStage') -Condition "eq(variables['BuildSuccess'], 'TRUE')"
 ```
 
@@ -32,12 +32,12 @@ dependencies and a condition. The stage has no jobs, so let's create the rest
 of the objects we need.
 
 ```powershell
-$Pool = New-Pool -Name 'MyPool'
+$Pool = New-AdoPool -Name 'MyPool'
 
-$Template = New-Template -Name 'template.yml' `
+$Template = New-AdoTemplate -Name 'template.yml' `
 -Parameters @{'Environment'='$(Environment)'}
 
-$Job = New-Job -Name MyJob -Pool $Pool -Variables `
+$Job = New-AdoJob -Name MyJob -Pool $Pool -Variables `
 @{'Environment'="Development"} -Steps $Template
 ```
 

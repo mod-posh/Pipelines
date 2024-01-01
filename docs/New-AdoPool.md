@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# New-Pool
+# New-AdoPool
 
 ## SYNOPSIS
 
@@ -14,7 +14,7 @@ This Cmdlet creates an Ado Pool object
 ## SYNTAX
 
 ```powershell
-New-Pool [-Name] <String> [[-Demands] <String[]>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+New-AdoPool [-Name] <String> [[-Demands] <String[]>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -27,7 +27,7 @@ specification also holds information about the job's strategy for running.
 ### Example 1
 
 ```powershell
-PS C:\> New-Pool -Name '$(poolName)' -Demands 'Agent.Name -equals $(AgentName)'
+PS C:\> New-AdoPool -Name '$(poolName)' -Demands 'Agent.Name -equals $(AgentName)'
 
 Name        Demands
 ----        -------

@@ -9,7 +9,7 @@ A PowerShell module for working with ADO/Github pipelines
 
 ## Pipelines Cmdlets
 
-### [New-Job](docs/New-Job.md)
+### [New-AdoJob](docs/New-AdoJob.md)
 
 This Cmdlet creates an Ado Job object
 
@@ -20,7 +20,7 @@ job is the smallest unit of work that can be scheduled to run.
 Azure Pipelines does not support job priority for YAML pipelines. To control
 when jobs run, you can specify conditions and dependencies.
 
-### [New-Pipeline](docs/New-Pipeline.md)
+### [New-AdoPipeline](docs/New-AdoPipeline.md)
 
 This Cmdlet creates an Ado Pipeline object
 
@@ -28,14 +28,14 @@ A pipeline defines the continuous integration and deployment process for your
 app. It's made up of one or more stages. It can be thought of as a workflow that
 defines how your test, build, and deployment steps are run.
 
-### [New-Pool](docs/New-Pool.md)
+### [New-AdoPool](docs/New-AdoPool.md)
 
 This Cmdlet creates an Ado Pool object
 
 The pool keyword specifies which pool to use for a job of the pipeline. A pool
 specification also holds information about the job's strategy for running.
 
-### [New-Stage](docs/New-Stage.md)
+### [New-AdoStage](docs/New-AdoStage.md)
 
 This Cmdlet creates an Ado Stage object
 
@@ -44,7 +44,7 @@ of concerns (docs/for example, Build, QA, and production). Each stage contains o
 more jobs. When you define multiple stages in a pipeline, by default, they run
 one after the other.
 
-### [New-Template](docs/New-Template.md)
+### [New-AdoTemplate](docs/New-AdoTemplate.md)
 
 This Cmdlet creates an Ado Template object
 
