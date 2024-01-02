@@ -52,3 +52,26 @@ Templates let you define reusable content, logic, and parameters in YAML pipelin
 To work with templates effectively, you'll need to have a basic understanding of
 Azure Pipelines key concepts such as stages, steps, and jobs.
 
+### [New-GhaJob](docs/New-GhaJob.md)
+
+A workflow run is made up of one or more jobs, which run in parallel by default.
+To run jobs sequentially, you can define dependencies on other jobs using the
+jobs.<job_id>.needs keyword.
+
+Each job runs in a runner environment specified by runs-on.
+
+### [New-GhaStep](docs/New-GhaStep.md)
+
+A job contains a sequence of tasks called steps. Steps can run commands, run
+setup tasks, or run an action in your repository, a public repository, or an
+action published in a Docker registry. Not all steps run actions, but all
+actions run as a step. Each step runs in its own process in the runner
+environment and has access to the workspace and filesystem. Because steps run in
+their own process, changes to environment variables are not preserved between
+steps. GitHub provides built-in steps to set up and complete a job.
+
+### [New-GhaWorkflow](docs/New-GhaWorkflow.md)
+
+A workflow is a configurable automated process made up of one or more jobs. You
+must create a YAML file to define your workflow configuration.
+
