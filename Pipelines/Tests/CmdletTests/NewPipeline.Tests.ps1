@@ -4,15 +4,15 @@ BeforeAll {
     # or define Mocks if necessary
 }
 
-Describe 'New-Pipeline Cmdlet Tests' {
+Describe 'New-AdoPipeline Cmdlet Tests' {
 
     Context 'Parameter Tests' {
         It 'Should require a Name parameter' {
-            { New-Pipeline -Name $null } | Should -Throw -ExpectedMessage "Cannot bind argument to parameter 'Name' because it is null."
+            { New-AdoPipeline -Name $null } | Should -Throw -ExpectedMessage "Cannot bind argument to parameter 'Name' because it is null."
         }
 
         It 'Should accept a Name parameter' {
-            { New-Pipeline -Name 'ExamplePipeline' } | Should -Not -Throw
+            { New-AdoPipeline -Name 'ExamplePipeline' } | Should -Not -Throw
         }
     }
 
@@ -22,18 +22,18 @@ Describe 'New-Pipeline Cmdlet Tests' {
         }
 
         It 'Should return an object of type Pipeline' {
-            $result = New-Pipeline -Name 'ExamplePipeline'
+            $result = New-AdoPipeline -Name 'ExamplePipeline'
             $result | Should -BeOfType ModPosh.Pipelines.Ado.Pipeline
         }
 
         It 'Should have an empty Stages list by default' {
-            $result = New-Pipeline -Name 'ExamplePipeline'
+            $result = New-AdoPipeline -Name 'ExamplePipeline'
             $result.Stages.Count | Should -Be 0
         }
 
         It 'Should accept Stages parameter' {
             $stages = @([ModPosh.Pipelines.Ado.Stage]::new(), [ModPosh.Pipelines.Ado.Stage]::new())
-            $result = New-Pipeline -Name 'ExamplePipeline' -Stages $stages
+            $result = New-AdoPipeline -Name 'ExamplePipeline' -Stages $stages
             $result.Stages.Count | Should -Be $stages.Length
         }
 
