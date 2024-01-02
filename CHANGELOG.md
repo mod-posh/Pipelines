@@ -5,11 +5,61 @@ All changes to this module should be reflected in this document.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [[2.0.0.0]](https://github.com/mod-posh/Pipelines/releases/tag/v2.0.0.0) - 2024-01-02
+
+Breaking Change: Renamed cmdlets to support similar object names between ADO and Github
+
+1. Resolve name class between classes and cmdlets [Issue [#48](https://github.com/mod-posh/Pipelines/issues/48)]
+   1. Renamed existing cmdlets to add a prefix Ado (will be Gha for Github)
+   2. Renamed existing help documentation and urls to support this change
+   3. Incremented major version to 2.0.0.0 as this is a breaking change
+
+Adding limited support for Github Actions in this release
+
+What's New:
+
+1. Add Github Action Classes
+   1. Add Workflow Class [Issue [#32](https://github.com/mod-posh/Pipelines/issues/32)]
+   2. Add Job Class [Issue [#33](https://github.com/mod-posh/Pipelines/issues/33)]
+   3. Add Step Class [Issue [#34](https://github.com/mod-posh/Pipelines/issues/34)]
+2. Add Classes to YamlSerializer
+   1. Add Workflow to Serializer [Issue [#35](https://github.com/mod-posh/Pipelines/issues/35)]
+   2. Add Job to Serializer [Issue [#36](https://github.com/mod-posh/Pipelines/issues/36)]
+   3. Add Step to Serializer [Issue [#37](https://github.com/mod-posh/Pipelines/issues/37)]
+3. Add Github Action Cmdlets
+   1. Add Workflow Cmdlet [Issue [#38](https://github.com/mod-posh/Pipelines/issues/38)]
+   2. Add Job Cmdlet [Issue [#39](https://github.com/mod-posh/Pipelines/issues/39)]
+   3. Add Step Cmdlet [Issue [#40](https://github.com/mod-posh/Pipelines/issues/40)]
+4. Add Cmdlet Documentation
+   1. Add Workflow Cmdlet Help [Issue [#41](https://github.com/mod-posh/Pipelines/issues/41)]
+   2. Add Job Cmdlet Help [Issue [#42](https://github.com/mod-posh/Pipelines/issues/42)]
+   3. Add Step Cmdlet Help [Issue [#43](https://github.com/mod-posh/Pipelines/issues/43)]
+5. Add Pester Tests
+   1. Add Workflow PesterTests [Issue [#44](https://github.com/mod-posh/Pipelines/issues/44)]
+   2. Add Job PesterTests [Issue [#45](https://github.com/mod-posh/Pipelines/issues/45)]
+   3. Add Step PesterTests [Issue [#46](https://github.com/mod-posh/Pipelines/issues/46)]
+
+What's Changed:
+
+1. Added New version to Changelog
+2. Incremented Version Numbers
+
+BUGFIXES:
+
+1. Renamed Classes and Cmdlets to avoid name clash [Issue [#48](https://github.com/mod-posh/Pipelines/issues/48)]
+   1. Missed NewStage during rename [Issue [#51](https://github.com/mod-posh/Pipelines/issues/51)]
+2. Updated Pester tests with new Cmdlet names [Issue [#50](https://github.com/mod-posh/Pipelines/issues/50)]
+3. Cmdlets not testing for null properly [Issue [#52](https://github.com/mod-posh/Pipelines/issues/52)]
+4. Test module version and help version against project version [Issue [#49](https://github.com/mod-posh/Pipelines/issues/49)]
+5. Rename Ado tests to match cmdlets [Issue [#53](https://github.com/mod-posh/Pipelines/issues/53)]
+
+---
+
 ## [[1.6.0.0]](https://github.com/mod-posh/Pipelines/releases/tag/v1.6.0.0) - 2023-12-30
 
 This release added Pester Testing to the module
 
-What's changed:
+What's New:
 
 1. Added Pester to NewPipeline [Issue #22](https://github.com/mod-posh/Pipelines/issues/22)
 2. Added Pester to NewStage [Issue #24](https://github.com/mod-posh/Pipelines/issues/24)
@@ -24,7 +74,7 @@ What's changed:
 
 This release added error handling and validation to inputs across the module.
 
-What's changed:
+What's New:
 
 1. Added regex to handle name validation in Stage [Issue #19](https://github.com/mod-posh/Pipelines/issues/19)
 2. Added regex to handle name validation in Pool
@@ -39,7 +89,7 @@ What's changed:
 
 This is the first working release published into the PowerShell Gallery. This release adds documentation to the module.
 
-What's changed:
+What's New:
 
 1. Added the initial help documents using PlatyPS [Issue #18](https://github.com/mod-posh/Pipelines/issues/18)
    1. Updated documentation for all Cmdlets [Issue #18](https://github.com/mod-posh/Pipelines/issues/18)
@@ -53,7 +103,7 @@ What's changed:
 
 This release adds the YamlSerializer, and updates the classes to leverage the new serializer
 
-What's changed:
+What's New:
 
 1. Set Stage to be an optional parameter in the Cmdlet [Issue #12](https://github.com/mod-posh/Pipelines/issues/12)
 2. Create the Serialization Interface [Issue #13](https://github.com/mod-posh/Pipelines/issues/13)
@@ -67,7 +117,7 @@ What's changed:
 
 This release adds the PowerShell Cmdlets
 
-What's changed:
+What's New:
 
 1. Adding NewPipeline Cmdlet for [Issue #5](https://github.com/mod-posh/Pipelines/issues/5)
    1. Added Pipeline class, Closes [Issue #5](https://github.com/mod-posh/Pipelines/issues/5)
@@ -82,7 +132,7 @@ What's changed:
 
 Initial release of code, base models no functionality.
 
-What's changed:
+What's New:
 
 1. Adding Stage class for [Issue #1](https://github.com/mod-posh/Pipelines/issues/1)
 2. Added Job class [Issue #2](https://github.com/mod-posh/Pipelines/issues2)

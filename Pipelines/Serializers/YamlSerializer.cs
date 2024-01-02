@@ -15,9 +15,9 @@ namespace ModPosh.Pipelines.Serializers
                 {
                     return SerializeTemplate(stage);
                 }
-                if (obj is Job job)
+                if (obj is Ado.Job adojob)
                 {
-                    return SerializeTemplate(job);
+                    return SerializeTemplate(adojob);
                 }
                 if (obj is Template template)
                 {
@@ -30,6 +30,18 @@ namespace ModPosh.Pipelines.Serializers
                 if (obj is Ado.Pipeline pipeline)
                 {
                     return SerializeTemplate(pipeline);
+                }
+                if (obj is Gha.Workflow workflow)
+                {
+                    return SerializeTemplate(workflow);
+                }
+                if (obj is Gha.Job ghajob)
+                {
+                    return SerializeTemplate(ghajob);
+                }
+                if (obj is Gha.Step step)
+                {
+                    return SerializeTemplate(step);
                 }
             }
             catch (Exception ex)
@@ -77,7 +89,7 @@ namespace ModPosh.Pipelines.Serializers
             }
             return sb.ToString().Trim();
         }
-        private string SerializeTemplate(Job job)
+        private string SerializeTemplate(Ado.Job job)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"- job: {job.Name}");
@@ -165,6 +177,69 @@ namespace ModPosh.Pipelines.Serializers
             foreach (Stage stage in pipeline.Stages)
             {
                 sb.AppendLine(stage.ToString());
+            }
+            return sb.ToString().Trim();
+        }
+        private string SerializeTemplate(Gha.Workflow workflow)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"name: {workflow.Name}");
+            if (string.IsNullOrEmpty(workflow.RunName) == false)
+                sb.AppendLine($"run-name: {workflow.RunName}");
+            sb.AppendLine("on:");
+            sb.AppendLine("jobs:");
+            foreach (Gha.Job job in workflow.Jobs)
+            {
+                sb.AppendLine(job.ToString());
+            }
+            return sb.ToString().Trim();
+        }
+        private string SerializeTemplate(Gha.Job job)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"{job.Id}:");
+            sb.AppendLine($"  name: {job.Name}");
+            if (string.IsNullOrEmpty(job.If) == false)
+                sb.AppendLine($"  if: {job.If}");
+            if (string.IsNullOrEmpty(job.RunsOn) == false)
+                sb.AppendLine($"  runs-on: {job.RunsOn}");
+            if (job.Steps.Count > 0)
+            {
+                sb.AppendLine($"  steps:");
+                foreach (Gha.Step step in job.Steps)
+                {
+                    string[] lines = step.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                    for (int i = 0; i < lines.Length; i++)
+                    {
+                        lines[i] = lines[i].PadLeft(lines[i].Length + 2);
+                    }
+                    sb.AppendLine($"{new StringBuilder(string.Join(Environment.NewLine, lines))}");
+                }
+            }
+            return sb.ToString().Trim();
+        }
+        private string SerializeTemplate(Gha.Step step)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"{step.Id}:");
+            if (string.IsNullOrEmpty(step.If) == false)
+                sb.AppendLine($"  if: {step.If}");
+            if (string.IsNullOrEmpty(step.Name) == false)
+                sb.AppendLine($"  name: {step.Name}");
+            if (string.IsNullOrEmpty(step.Uses) == false)
+                sb.AppendLine($"  uses: {step.Uses}");
+            if (string.IsNullOrEmpty(step.Run) == false)
+                sb.AppendLine($"  run: {step.Run}");
+            if (step.With.Count > 0)
+            {
+                sb.AppendLine($"  with:");
+                foreach (var with in step.With)
+                {
+                    if (with.Value.StartsWith("$"))
+                        sb.AppendLine($"    {with.Key}: {with.Value}");
+                    else
+                        sb.AppendLine($"    {with.Key}: \"{with.Value}\"");
+                }
             }
             return sb.ToString().Trim();
         }

@@ -1,19 +1,20 @@
-$script:ModuleName = 'Pipelines';                                                               # The name of your PowerShell module
-$script:ProjectName = "Pipelines";                                                              # The name of your C# Project
-$script:DotnetVersion = "net7.0";                                                               # The version of .Net the project is targeted to
+$script:ModuleName = 'Pipelines'; # The name of your PowerShell module
+$script:ProjectName = "Pipelines"; # The name of your C# Project
+$script:DotnetVersion = "net7.0"; # The version of .Net the project is targeted to
 $script:GithubOrg = 'mod-posh'                                                                  # This could be your github username if you're not working in a Github Org
-$script:Repository = "https://github.com/$($script:GithubOrg)";                                 # This is the Github Repo
-$script:DeployBranch = 'main';                                                                  # The branch that we deploy from, typically master or main
-$script:Root = $PSScriptRoot;                                                                   # This will be the root of your Module Project, not the Repository Root
-$script:Source = Join-Path $PSScriptRoot $script:ModuleName;                                    # This will be the root of your Module Project, not the Repository Root
-$script:Output = Join-Path $PSScriptRoot 'output';                                              # The module will be output into this folder
-$script:Docs = Join-Path $PSScriptRoot 'docs';                                                  # The root folder for the PowerShell Module
-$script:Destination = Join-Path $Output $script:ModuleName;                                     # The PowerShell module folder that contains the manifest and other files
-$script:ModulePath = "$Destination\$script:ModuleName.dll";                                     # The main PowerShell Module file
-$script:ManifestPath = "$Destination\$script:ModuleName.psd1";                                  # The main PowerShell Module Manifest
-$script:TestFile = ("TestResults_$(Get-Date -Format s).xml").Replace(':', '-');                 # The Pester Test output file
+$script:Repository = "https://github.com/$($script:GithubOrg)"; # This is the Github Repo
+$script:DeployBranch = 'main'; # The branch that we deploy from, typically master or main
+$script:Root = $PSScriptRoot; # This will be the root of your Module Project, not the Repository Root
+$script:Source = Join-Path $PSScriptRoot $script:ModuleName; # This will be the root of your Module Project, not the Repository Root
+$script:Output = Join-Path $PSScriptRoot 'output'; # The module will be output into this folder
+$script:Docs = Join-Path $PSScriptRoot 'docs'; # The root folder for the PowerShell Module
+$script:Destination = Join-Path $Output $script:ModuleName; # The PowerShell module folder that contains the manifest and other files
+$script:ModulePath = "$Destination\$script:ModuleName.dll"; # The main PowerShell Module file
+$script:ManifestPath = "$Destination\$script:ModuleName.psd1"; # The main PowerShell Module Manifest
+$script:TestFile = ("TestResults_$(Get-Date -Format s).xml").Replace(':', '-'); # The Pester Test output file
 $script:DiscordChannel = "https://discord.com/channels/1044305359021555793/1044305781627035811" # Discord Channel
 $script:PoshGallery = "https://www.powershellgallery.com/packages/$($script:ModuleName)"        # The PowerShell Gallery URL
+$script:Fwlink = "https://raw.githubusercontent.com/$($script:GithubOrg)/$($script:ModuleName)/main/cabs/"
 
 $BuildHelpers = Get-Module -ListAvailable | Where-Object -Property Name -eq BuildHelpers;
 if ($BuildHelpers)
@@ -76,14 +77,15 @@ Write-Host -ForegroundColor Green "Repository     : $($script:Repository)";
 Write-Host -ForegroundColor Green "DiscordChannel : $($script:DiscordChannel)";
 Write-Host -ForegroundColor Green "PoshGallery    : $($script:PoshGallery)";
 Write-Host -ForegroundColor Green "DeployBranch   : $($script:DeployBranch)";
+Write-Host -ForegroundColor Green "FwLink         : $($script:Fwlink)";
 
 Task default -depends LocalUse
 
 Task LocalUse -Description "Setup for local use and testing" -depends Clean, BuildProject, CopyModuleFiles
 
-Task Build -depends LocalUse, PesterTest
+Task Build -depends LocalUse
 Task Package -depends CreateExternalHelp, CreateCabFile, UpdateReadme
-Task Deploy -depends CheckBranch, ReleaseNotes, PublishModule, NewTaggedRelease, Post2Discord, Post2Bluesky
+Task Deploy -depends PesterTest, CheckBranch, ReleaseNotes, PublishModule, NewTaggedRelease, Post2Discord, Post2Bluesky
 
 Task Clean -depends CleanProject {
  $null = Remove-Item $Output -Recurse -ErrorAction Ignore
@@ -138,24 +140,24 @@ Task Post2Bluesky -Description "Post a message to bsky.app" -Action {
  $createdAt = Get-Date -Format "yyyy-MM-ddTHH:mm:ss.ffffffZ"
  # Authenticate
  $AuthBody = Get-Content -Path "$($PSScriptRoot)\bluesky.json"
- $Handle = $AuthBody |ConvertFrom-Json |Select-Object -ExpandProperty Identifier
+ $Handle = $AuthBody | ConvertFrom-Json | Select-Object -ExpandProperty Identifier
  $Headers = @{}
- $Headers.Add('Content-Type','application/json')
+ $Headers.Add('Content-Type', 'application/json')
  $Response = Invoke-RestMethod -Uri "https://bsky.social/xrpc/com.atproto.server.createSession" -Method Post -Body $AuthBody -Headers $Headers
  # Create post
- $Headers.Add('Authorization',"Bearer $($Response.accessJwt)")
+ $Headers.Add('Authorization', "Bearer $($Response.accessJwt)")
  $Record = New-Object -TypeName psobject -Property @{
-  '$type'="app.bsky.feed.post"
-  'text'="Version $($version) of $($script:ModuleName) released. Please visit Github ($($script:Repository)/$($script:ModuleName)) or PowershellGallery ($($script:PoshGallery)) to download."
-  "createdAt"=$createdAt
+  '$type'     = "app.bsky.feed.post"
+  'text'      = "Version $($version) of $($script:ModuleName) released. Please visit Github ($($script:Repository)/$($script:ModuleName)) or PowershellGallery ($($script:PoshGallery)) to download."
+  "createdAt" = $createdAt
  }
  $Post = New-Object -TypeName psobject -Property @{
-  'repo'=$Handle
-  'collection'='app.bsky.feed.post'
-  record=$Record
+  'repo'       = $Handle
+  'collection' = 'app.bsky.feed.post'
+  record       = $Record
  }
 
- Invoke-RestMethod -Uri "https://bsky.social/xrpc/com.atproto.repo.createRecord" -Method Post -Body ($Post |ConvertTo-Json -Compress) -Headers $Headers
+ Invoke-RestMethod -Uri "https://bsky.social/xrpc/com.atproto.repo.createRecord" -Method Post -Body ($Post | ConvertTo-Json -Compress) -Headers $Headers
 }
 
 Task CleanProject -Description "Clean the project before building" -Action {
@@ -171,6 +173,12 @@ Task CopyModuleFiles -Description "Copy files for the module" -Action {
  Copy-Item "$($PSScriptRoot)\$($script:ModuleName).psd1" $script:Destination -Force
 }
 
+Task CreateHelp -Description "Create the help documentation" -depends Build -Action {
+ Import-Module -Name $script:Destination -Force  -Scope Global
+ $Version = (Get-Module -Name $script:ModuleName | Select-Object -Property Version).Version.ToString()
+ New-MarkdownHelp -Module $script:ModuleName -AlphabeticParamsOrder -OutputFolder $script:Docs -UseFullTypeName -WithModulePage -HelpVersion $Version -FwLink $script:Fwlink -Force
+}
+
 Task CreateExternalHelp -Description "Create external help file" -Action {
  New-ExternalHelp -Path $script:Docs -OutputPath $script:Destination -Force
 }
@@ -182,18 +190,18 @@ Task CreateCabFile -Description "Create cab file for download" -Action {
 Task PesterTest -description "Test module" -action {
  if (!(Get-Module -Name $script:ModuleName )) { Import-Module -Name $script:Destination }
  $pesterConfig = New-PesterConfiguration @{
-  Run = @{
-      Path = "$($script:Source)\Tests\CmdletTests"
+  Run        = @{
+   Path = "$($script:Source)\Tests\CmdletTests"
   }
-  Output = @{
-      Verbosity = 'Detailed'
+  Output     = @{
+   Verbosity = 'Detailed'
   }
   TestResult = @{
-      Enabled = $true
-      OutputPath = "$($PSScriptRoot)\$($script:TestFile)"
-      TestResultFormat = 'NUnitXml'
+   Enabled          = $true
+   OutputPath       = "$($PSScriptRoot)\$($script:TestFile)"
+   TestResultFormat = 'NUnitXml'
   }
-}
+ }
  $TestResults = Invoke-Pester -Configuration $pesterConfig
  if ($TestResults.FailedCount -gt 0)
  {

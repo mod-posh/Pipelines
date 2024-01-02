@@ -3,10 +3,10 @@ using System.Management.Automation;
 
 namespace ModPosh.Pipelines.Cmdlets
 {
-    [Cmdlet(VerbsCommon.New, "Pipeline", HelpUri = "https://github.com/mod-posh/Pipelines/blob/v1.6.0.0/docs/New-Pipeline.md#new-pipeline")]
+    [Cmdlet(VerbsCommon.New, "AdoPipeline", HelpUri = "https://github.com/mod-posh/Pipelines/blob/v2.0.0.0/docs/New-AdoPipeline.md#new-adopipeline")]
     [OutputType(typeof(Pipeline))]
     [CmdletBinding(PositionalBinding = true)]
-    public class NewPipeline : PSCmdlet
+    public class NewAdoPipeline : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "Default")]
         public string Name { get; set; } = string.Empty;

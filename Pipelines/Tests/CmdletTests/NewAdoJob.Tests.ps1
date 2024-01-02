@@ -3,33 +3,33 @@ BeforeAll {
     # Import-Module 'Path\To\Your\Module.psm1'
 }
 
-Describe 'New-Job Cmdlet Tests' {
+Describe 'New-AdoJob Cmdlet Tests' {
 
     Context 'Parameter Tests' {
         It 'Should require a Name parameter' {
-            { New-Job -Name $null } | Should -Throw -ExpectedMessage "Cannot bind argument to parameter 'Name' because it is null."
+            { New-AdoJob -Name $null } | Should -Throw -ExpectedMessage "Cannot bind argument to parameter 'Name' because it is null."
         }
 
         It 'Should accept a Name parameter' {
-            { New-Job -Name 'ExampleJob' } | Should -Not -Throw
+            { New-AdoJob -Name 'ExampleJob' } | Should -Not -Throw
         }
     }
 
     Context 'Functionality Tests' {
         It 'Should return an object of type Ado.Job' {
-            $result = New-Job -Name 'ExampleJob'
+            $result = New-AdoJob -Name 'ExampleJob'
             $result | Should -BeOfType ModPosh.Pipelines.Ado.Job
         }
 
         It 'Can have a Pool parameter' {
             $pool = [ModPosh.Pipelines.Ado.Pool]::new()
-            $result = New-Job -Name 'ExampleJob' -Pool $pool
+            $result = New-AdoJob -Name 'ExampleJob' -Pool $pool
             $result.Pool | Should -Be $pool
         }
 
         It 'Can have Variables parameter' {
             $variables = @{ Variable1 = 'Value1'; Variable2 = 'Value2' }
-            $result = New-Job -Name 'ExampleJob' -Variables $variables
+            $result = New-AdoJob -Name 'ExampleJob' -Variables $variables
 
             # Ensure $result.Variables contains all keys from $variables
             foreach ($key in $variables.Keys) {
@@ -45,7 +45,7 @@ Describe 'New-Job Cmdlet Tests' {
 
         It 'Can have Steps parameter' {
             $steps = @([ModPosh.Pipelines.Ado.Template]::new(), [ModPosh.Pipelines.Ado.Template]::new())
-            $result = New-Job -Name 'ExampleJob' -Steps $steps
+            $result = New-AdoJob -Name 'ExampleJob' -Steps $steps
             $result.Steps.Count | Should -Be $steps.Length
         }
     }

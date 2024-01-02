@@ -1,11 +1,11 @@
 ---
 external help file: Pipelines.dll-Help.xml
 Module Name: Pipelines
-online version:
+online version: https://github.com/mod-posh/Pipelines/blob/v2.0.0.0/docs/New-AdoTemplate.md#new-adotemplate
 schema: 2.0.0
 ---
 
-# New-Template
+# New-AdoTemplate
 
 ## SYNOPSIS
 
@@ -14,7 +14,7 @@ This Cmdlet creates an Ado Template object
 ## SYNTAX
 
 ```powershell
-New-Template [-Name] <String> [[-Parameters] <Hashtable>] [-ProgressAction <ActionPreference>]
+New-AdoTemplate [-Name] <String> [[-Parameters] <Hashtable>] [-ProgressAction <ActionPreference>]
  [<CommonParameters>]
 ```
 
@@ -29,7 +29,7 @@ Azure Pipelines key concepts such as stages, steps, and jobs.
 ### Example 1
 
 ```powershell
-PS C:\> New-Template -Name 'template.yml' -Parameters @{'Environment'='$(Environment)'}
+PS C:\> New-AdoTemplate -Name 'template.yml' -Parameters @{'Environment'='$(Environment)'}
 
 Name         Parameters
 ----         ----------

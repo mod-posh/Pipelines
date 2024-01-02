@@ -4,10 +4,10 @@ using System.Management.Automation;
 
 namespace ModPosh.Pipelines.Cmdlets
 {
-    [Cmdlet(VerbsCommon.New, "Template", HelpUri = "https://github.com/mod-posh/Pipelines/blob/v1.6.0.0/docs/New-Template.md#new-template")]
+    [Cmdlet(VerbsCommon.New, "AdoTemplate", HelpUri = "https://github.com/mod-posh/Pipelines/blob/v2.0.0.0/docs/New-AdoTemplate.md#new-adotemplate")]
     [OutputType(typeof(Template))]
     [CmdletBinding(PositionalBinding = true)]
-    public class NewTemplate : PSCmdlet
+    public class NewAdoTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "Default")]
         public string Name { get; set; } = string.Empty;
