@@ -9,7 +9,13 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-{{ Fill in the Synopsis }}
+A job contains a sequence of tasks called steps. Steps can run commands, run
+setup tasks, or run an action in your repository, a public repository, or an
+action published in a Docker registry. Not all steps run actions, but all
+actions run as a step. Each step runs in its own process in the runner
+environment and has access to the workspace and filesystem. Because steps run in
+their own process, changes to environment variables are not preserved between
+steps. GitHub provides built-in steps to set up and complete a job.
 
 ## SYNTAX
 
@@ -20,23 +26,37 @@ New-GhaStep [-Id] <String> [[-Name] <String>] [[-Uses] <String>] [[-Run] <String
 
 ## DESCRIPTION
 
-{{ Fill in the Description }}
+A job contains a sequence of tasks called steps. Steps can run commands, run
+setup tasks, or run an action in your repository, a public repository, or an
+action published in a Docker registry. Not all steps run actions, but all
+actions run as a step. Each step runs in its own process in the runner
+environment and has access to the workspace and filesystem. Because steps run in
+their own process, changes to environment variables are not preserved between
+steps. GitHub provides built-in steps to set up and complete a job.
 
 ## EXAMPLES
 
 ### Example 1
 
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> New-GhaStep -Id 'myStep' -Name 'my_step'
+
+Id   : myStep
+If   :
+Name : my_step
+Uses :
+Run  :
+With : {}
 ```
 
-{{ Add example description here }}
+This creates a Step object on the Command line.
 
 ## PARAMETERS
 
 ### -Id
 
-{{ Fill Id Description }}
+A unique identifier for the step. You can use the id to reference the step in
+contexts. For more information, see "Contexts."
 
 ```yaml
 Type: System.String
@@ -52,7 +72,7 @@ Accept wildcard characters: False
 
 ### -Name
 
-{{ Fill Name Description }}
+A name for your step to display on GitHub.
 
 ```yaml
 Type: System.String
@@ -66,25 +86,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ProgressAction
-
-{{ Fill ProgressAction Description }}
-
-```yaml
-Type: System.Management.Automation.ActionPreference
-Parameter Sets: (All)
-Aliases: proga
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Run
 
-{{ Fill Run Description }}
+Runs command-line programs using the operating system's shell. If you do not
+provide a name, the step name will default to the text specified in the run
+command.
 
 ```yaml
 Type: System.String
@@ -100,7 +106,9 @@ Accept wildcard characters: False
 
 ### -Uses
 
-{{ Fill Uses Description }}
+Selects an action to run as part of a step in your job. An action is a reusable
+unit of code. You can use an action defined in the same repository as the
+workflow, a public repository, or in a published Docker container image.
 
 ```yaml
 Type: System.String
@@ -116,7 +124,9 @@ Accept wildcard characters: False
 
 ### -With
 
-{{ Fill With Description }}
+A map of the input parameters defined by the action. Each input parameter is a
+key/value pair. Input parameters are set as environment variables. The variable
+is prefixed with INPUT_ and converted to upper case.
 
 ```yaml
 Type: System.Collections.Hashtable
@@ -146,4 +156,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[https://github.com/mod-posh/Pipelines/blob/v2.0.0.0/docs/New-GhaStep.md#new-ghastep](https://github.com/mod-posh/Pipelines/blob/v2.0.0.0/docs/New-GhaStep.md#new-ghastep)
+[Steps](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idsteps)
+
+[Uses](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsuses)
+
+[Runs](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun)
+
+[With](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswith)

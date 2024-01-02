@@ -59,12 +59,23 @@ Azure Pipelines key concepts such as stages, steps, and jobs.
 
 ### [New-GhaJob](New-GhaJob.md)
 
-{{ Fill in the Description }}
+A workflow run is made up of one or more jobs, which run in parallel by default.
+To run jobs sequentially, you can define dependencies on other jobs using the
+jobs.<job_id>.needs keyword.
+
+Each job runs in a runner environment specified by runs-on.
 
 ### [New-GhaStep](New-GhaStep.md)
 
-{{ Fill in the Description }}
+A job contains a sequence of tasks called steps. Steps can run commands, run
+setup tasks, or run an action in your repository, a public repository, or an
+action published in a Docker registry. Not all steps run actions, but all
+actions run as a step. Each step runs in its own process in the runner
+environment and has access to the workspace and filesystem. Because steps run in
+their own process, changes to environment variables are not preserved between
+steps. GitHub provides built-in steps to set up and complete a job.
 
 ### [New-GhaWorkflow](New-GhaWorkflow.md)
 
-{{ Fill in the Description }}
+A workflow is a configurable automated process made up of one or more jobs. You
+must create a YAML file to define your workflow configuration.

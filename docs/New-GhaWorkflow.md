@@ -9,7 +9,8 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-{{ Fill in the Synopsis }}
+A workflow is a configurable automated process made up of one or more jobs. You must create a YAML file to define your
+workflow configuration.
 
 ## SYNTAX
 
@@ -20,23 +21,32 @@ New-GhaWorkflow [-Name] <String> [[-RunName] <String>] [[-Jobs] <Job[]>] [-Progr
 
 ## DESCRIPTION
 
-{{ Fill in the Description }}
+A workflow is a configurable automated process made up of one or more jobs. You must create a YAML file to define your
+workflow configuration.
 
 ## EXAMPLES
 
 ### Example 1
 
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> New-GhaWorkflow -Name 'MyWorkflow' -RunName 'my_workflow'
+
+Name       RunName     Jobs
+----       -------     ----
+MyWorkflow my_workflow {}
 ```
 
-{{ Add example description here }}
+This creates a Workflow object on the Command line.
 
 ## PARAMETERS
 
 ### -Jobs
 
-{{ Fill Jobs Description }}
+A workflow run is made up of one or more jobs, which run in parallel by default.
+To run jobs sequentially, you can define dependencies on other jobs using the
+jobs.<job_id>.needs keyword.
+
+Each job runs in a runner environment specified by runs-on.
 
 ```yaml
 Type: ModPosh.Pipelines.Gha.Job[]
@@ -52,7 +62,9 @@ Accept wildcard characters: False
 
 ### -Name
 
-{{ Fill Name Description }}
+The name of the workflow. GitHub displays the names of your workflows under your
+repository's "Actions" tab. If you omit name, GitHub displays the workflow file
+path relative to the root of the repository.
 
 ```yaml
 Type: System.String
@@ -66,25 +78,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ProgressAction
-
-{{ Fill ProgressAction Description }}
-
-```yaml
-Type: System.Management.Automation.ActionPreference
-Parameter Sets: (All)
-Aliases: proga
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -RunName
 
-{{ Fill RunName Description }}
+The name for workflow runs generated from the workflow. GitHub displays the
+workflow run name in the list of workflow runs on your repository's "Actions"
+tab. If run-name is omitted or is only whitespace, then the run name is set to
+event-specific information for the workflow run. For example, for a workflow
+triggered by a push or pull_request event, it is set as the commit message.
 
 ```yaml
 Type: System.String
@@ -114,4 +114,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[https://github.com/mod-posh/Pipelines/blob/v2.0.0.0/docs/New-GhaWorkflow.md#new-ghaworkflow](https://github.com/mod-posh/Pipelines/blob/v2.0.0.0/docs/New-GhaWorkflow.md#new-ghaworkflow)
+[Workflows](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#about-yaml-syntax-for-workflows)
+
+[Jobs](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobs)
