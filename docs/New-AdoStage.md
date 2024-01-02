@@ -1,7 +1,7 @@
 ---
 external help file: Pipelines.dll-Help.xml
 Module Name: Pipelines
-online version:
+online version: https://github.com/mod-posh/Pipelines/blob/v2.0.0.0/docs/New-AdoStage.md#new-adostage
 schema: 2.0.0
 ---
 
