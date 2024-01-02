@@ -14,6 +14,7 @@ $script:ManifestPath = "$Destination\$script:ModuleName.psd1";                  
 $script:TestFile = ("TestResults_$(Get-Date -Format s).xml").Replace(':', '-');                 # The Pester Test output file
 $script:DiscordChannel = "https://discord.com/channels/1044305359021555793/1044305781627035811" # Discord Channel
 $script:PoshGallery = "https://www.powershellgallery.com/packages/$($script:ModuleName)"        # The PowerShell Gallery URL
+$script:Fwlink = "https://raw.githubusercontent.com/$($script:GithubOrg)/$($script:ModuleName)/main/cabs/"
 
 $BuildHelpers = Get-Module -ListAvailable | Where-Object -Property Name -eq BuildHelpers;
 if ($BuildHelpers)
@@ -76,6 +77,7 @@ Write-Host -ForegroundColor Green "Repository     : $($script:Repository)";
 Write-Host -ForegroundColor Green "DiscordChannel : $($script:DiscordChannel)";
 Write-Host -ForegroundColor Green "PoshGallery    : $($script:PoshGallery)";
 Write-Host -ForegroundColor Green "DeployBranch   : $($script:DeployBranch)";
+Write-Host -ForegroundColor Green "FwLink         : $($script:Fwlink)";
 
 Task default -depends LocalUse
 
@@ -169,6 +171,11 @@ Task BuildProject -Description "Build the project" -Action {
 Task CopyModuleFiles -Description "Copy files for the module" -Action {
  Copy-Item "$($PSScriptRoot)\$($script:ProjectName)\bin\Release\$($script:DotnetVersion)\*.dll" $script:Destination -Force
  Copy-Item "$($PSScriptRoot)\$($script:ModuleName).psd1" $script:Destination -Force
+}
+
+Task CreateHelp -Description "Create the help documentation" -depends Build -Action {
+ $Version = (Get-Module -Name $script:ModuleName | Select-Object -Property Version).Version.ToString()
+ New-MarkdownHelp -Module $script:ModuleName -AlphabeticParamsOrder -OutputFolder $script:Docs -UseFullTypeName -WithModulePage -HelpVersion $Version -FwLink $script:Fwlink
 }
 
 Task CreateExternalHelp -Description "Create external help file" -Action {
