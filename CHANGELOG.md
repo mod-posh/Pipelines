@@ -50,6 +50,8 @@ BUGFIXES:
    1. Missed NewStage during rename [Issue [#51](https://github.com/mod-posh/Pipelines/issues/51)]
 2. Updated Pester tests with new Cmdlet names [Issue [#50](https://github.com/mod-posh/Pipelines/issues/50)]
 3. Cmdlets not testing for null properly [Issue [#52](https://github.com/mod-posh/Pipelines/issues/52)]
+4. Test module version and help version against project version [Issue [#49](https://github.com/mod-posh/Pipelines/issues/49)]
+5. Rename Ado tests to match cmdlets [Issue [#53](https://github.com/mod-posh/Pipelines/issues/53)]
 
 ---
 
