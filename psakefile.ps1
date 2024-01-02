@@ -256,6 +256,7 @@ Task ReleaseNotes -Description "Create release notes file for module manifest" -
   Out-File -FilePath "$($PSScriptRoot)\RELEASE.md" -InputObject $stringbuilder.ToString() -Encoding ascii -Force
   $ReleaseNotes = (Get-Content -Path "$($PSScriptRoot)\RELEASE.md").Replace('## ', '-').Replace('# ', '').Replace('*', '-')
   Update-Metadata -Path "$($script:Root)\$($script:ModuleName).psd1" -PropertyName ReleaseNotes -Value @($ReleaseNotes)
+  Copy-Item "$($PSScriptRoot)\$($script:ModuleName).psd1" $script:Destination -Force
  }
 }
 
