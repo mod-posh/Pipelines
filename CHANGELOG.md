@@ -49,6 +49,7 @@ BUGFIXES:
 1. Renamed Classes and Cmdlets to avoid name clash [Issue [#48](https://github.com/mod-posh/Pipelines/issues/48)]
    1. Missed NewStage during rename [Issue [#51](https://github.com/mod-posh/Pipelines/issues/51)]
 2. Updated Pester tests with new Cmdlet names [Issue [#50](https://github.com/mod-posh/Pipelines/issues/50)]
+3. Cmdlets not testing for null properly [Issue [#52](https://github.com/mod-posh/Pipelines/issues/52)]
 
 ---
 
