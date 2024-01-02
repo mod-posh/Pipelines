@@ -56,3 +56,15 @@ This Cmdlet creates an Ado Template object
 Templates let you define reusable content, logic, and parameters in YAML pipelines.
 To work with templates effectively, you'll need to have a basic understanding of
 Azure Pipelines key concepts such as stages, steps, and jobs.
+
+### [New-GhaJob](New-GhaJob.md)
+
+{{ Fill in the Description }}
+
+### [New-GhaStep](New-GhaStep.md)
+
+{{ Fill in the Description }}
+
+### [New-GhaWorkflow](New-GhaWorkflow.md)
+
+{{ Fill in the Description }}
