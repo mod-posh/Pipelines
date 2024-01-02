@@ -174,6 +174,7 @@ Task CopyModuleFiles -Description "Copy files for the module" -Action {
 }
 
 Task CreateHelp -Description "Create the help documentation" -depends Build -Action {
+ if (!(Get-Module -Name $script:ModuleName )) { Import-Module -Name $script:Destination }
  $Version = (Get-Module -Name $script:ModuleName | Select-Object -Property Version).Version.ToString()
  New-MarkdownHelp -Module $script:ModuleName -AlphabeticParamsOrder -OutputFolder $script:Docs -UseFullTypeName -WithModulePage -HelpVersion $Version -FwLink $script:Fwlink
 }
