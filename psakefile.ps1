@@ -236,7 +236,9 @@ Task ReleaseNotes -Description "Create release notes file for module manifest" -
  {
   [System.Text.StringBuilder]$stringbuilder = [System.Text.StringBuilder]::new()
   [void]$stringbuilder.AppendLine( "# $($Milestone.title)" )
-  [void]$stringbuilder.AppendLine( "$($Milestone.description)" )
+  if ($Milestone.description){
+   [void]$stringbuilder.AppendLine( "$($Milestone.description)" )
+  }
   $i = Get-GitHubIssue -OwnerName $script:GithubOrg -RepositoryName $script:ModuleName -RepositoryType All -Filter All -State Closed -MilestoneNumber $Milestone.Number;
   $headings = $i | ForEach-Object { $_.Labels.Name } | Sort-Object -Unique;
   foreach ($heading in $headings)
@@ -251,6 +253,8 @@ Task ReleaseNotes -Description "Create release notes file for module manifest" -
    }
   }
   Out-File -FilePath "$($PSScriptRoot)\RELEASE.md" -InputObject $stringbuilder.ToString() -Encoding ascii -Force
+  $ReleaseNotes = (Get-Content -Path "$($PSScriptRoot)\RELEASE.md").Replace('## ','-').Replace('# ','').Replace('*','-')
+  Update-Metadata -Path $script:ManifestPath -PropertyName ReleaseNotes -Value @($ReleaseNotes)
  }
 }
 
