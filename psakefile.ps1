@@ -83,9 +83,9 @@ Task default -depends LocalUse
 
 Task LocalUse -Description "Setup for local use and testing" -depends Clean, BuildProject, CopyModuleFiles
 
-Task Build -depends LocalUse, PesterTest
+Task Build -depends LocalUse
 Task Package -depends CreateExternalHelp, CreateCabFile, UpdateReadme
-Task Deploy -depends CheckBranch, ReleaseNotes, PublishModule, NewTaggedRelease, Post2Discord, Post2Bluesky
+Task Deploy -depends PesterTest, CheckBranch, ReleaseNotes, PublishModule, NewTaggedRelease, Post2Discord, Post2Bluesky
 
 Task Clean -depends CleanProject {
  $null = Remove-Item $Output -Recurse -ErrorAction Ignore
