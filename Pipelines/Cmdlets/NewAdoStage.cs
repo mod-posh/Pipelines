@@ -4,7 +4,7 @@ using System.Management.Automation;
 
 namespace ModPosh.Pipelines.Cmdlets
 {
-    [Cmdlet(VerbsCommon.New, "Stage", HelpUri = "https://github.com/mod-posh/Pipelines/blob/v2.0.0.0/docs/New-Stage.md#new-stage")]
+    [Cmdlet(VerbsCommon.New, "AdoStage", HelpUri = "https://github.com/mod-posh/Pipelines/blob/v2.0.0.0/docs/New-AdoStage.md#new-adostage")]
     [OutputType(typeof(Stage))]
     [CmdletBinding(PositionalBinding = true)]
     public class NewAdoStage : PSCmdlet
