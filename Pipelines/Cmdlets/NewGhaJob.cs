@@ -23,11 +23,11 @@ namespace ModPosh.Pipelines.Cmdlets
         protected override void BeginProcessing()
         {
             Gha.Job job = new Gha.Job(Id);
-            if (Name != null)
+            if (string.IsNullOrEmpty(Name) == false)
                 job.Name = Name;
-            if (If != null)
+            if (string.IsNullOrEmpty(If) == false)
                 job.If = If;
-            if (RunsOn != null)
+            if (string.IsNullOrEmpty(RunsOn) == false)
                 job.RunsOn = RunsOn;
             if (Steps.Length > 0)
                 job.Steps = Steps.ToList();

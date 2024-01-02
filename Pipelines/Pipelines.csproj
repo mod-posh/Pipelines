@@ -29,8 +29,4 @@
     <PackageReference Include="System.Management.Automation" Version="7.3.10" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Tests\CmdletTests\" />
-  </ItemGroup>
-
 </Project>

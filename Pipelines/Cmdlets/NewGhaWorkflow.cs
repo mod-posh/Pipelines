@@ -19,7 +19,7 @@ namespace ModPosh.Pipelines.Cmdlets
         protected override void BeginProcessing()
         {
             Workflow workflow = new Workflow(Name);
-            if (RunName != null)
+            if (string.IsNullOrEmpty(RunName) == false)
                 workflow.RunName = RunName;
             if (Jobs.Length > 0)
                 workflow.Jobs = Jobs.ToList();

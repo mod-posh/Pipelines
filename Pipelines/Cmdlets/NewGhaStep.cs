@@ -24,11 +24,11 @@ namespace ModPosh.Pipelines.Cmdlets
         protected override void BeginProcessing()
         {
             Step step = new Step(Id);
-            if (Name != null)
+            if (string.IsNullOrEmpty(Name) == false)
                 step.Name = Name;
-            if (Uses != null)
+            if (string.IsNullOrEmpty(Uses) == false)
                 step.Uses = Uses;
-            if (Run != null)
+            if (string.IsNullOrEmpty(Run) == false)
                 step.Run = Run;
             if (With != null)
             {
