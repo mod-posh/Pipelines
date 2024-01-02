@@ -72,7 +72,8 @@
     # FunctionsToExport = @()
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-    CmdletsToExport    = @('New-Pipeline', 'New-Stage', 'New-Job', 'New-Template', 'New-Pool')
+    CmdletsToExport    = @('New-AdoPipeline','New-AdoStage','New-AdoJob','New-AdoTemplate','New-AdoPool',
+                           'New-GhaWorkflow','New-GhaJob','New-GhaStep')
 
     # Variables to export from this module
     VariablesToExport  = '*'
