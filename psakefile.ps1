@@ -136,7 +136,8 @@ Task Post2Discord -Description "Post a message to discord" -Action {
 }
 
 Task Post2Bluesky -Description "Post a message to bsky.app" -Action {
- $version = (Get-Module -Name $($script:ModuleName) | Select-Object -Property Version).Version.ToString()
+ $Project = [xml](Get-Content -Path "$($script:Source)\$($script:ProjectName).csproj");
+ $Version = $Project.Project.PropertyGroup.Version.ToString();
  $createdAt = Get-Date -Format "yyyy-MM-ddTHH:mm:ss.ffffffZ"
  # Authenticate
  $AuthBody = Get-Content -Path "$($PSScriptRoot)\bluesky.json"
@@ -151,10 +152,23 @@ Task Post2Bluesky -Description "Post a message to bsky.app" -Action {
   'text'      = "Version $($version) of $($script:ModuleName) released. Please visit Github ($($script:Repository)/$($script:ModuleName)) or PowershellGallery ($($script:PoshGallery)) to download."
   "createdAt" = $createdAt
  }
+ $embeds += New-Object -TypeName psobject -Property @{
+  '$type'='app.bsky.embed.link'
+  'url'="$($script:Repository)/$($script:ModuleName)"
+  'title'="Github.com $($script:ModuleName)"
+  'description'=$project.Project.PropertyGroup.Description
+ }
+ $embeds += New-Object -TypeName psobject -Property @{
+  '$type'='app.bsky.embed.link'
+  'url'="$($script:PoshGallery)"
+  'title'="PowershellGallery.com $($script:ModuleName)"
+  'description'=$project.Project.PropertyGroup.Description
+ }
  $Post = New-Object -TypeName psobject -Property @{
   'repo'       = $Handle
   'collection' = 'app.bsky.feed.post'
   record       = $Record
+  embeds       = $embeds
  }
 
  Invoke-RestMethod -Uri "https://bsky.social/xrpc/com.atproto.repo.createRecord" -Method Post -Body ($Post | ConvertTo-Json -Compress) -Headers $Headers
